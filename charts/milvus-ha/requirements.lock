@@ -1,0 +1,9 @@
+dependencies:
+- name: etcd
+  repository: https://charts.bitnami.com/bitnami
+  version: 5.5.0
+- name: minio
+  repository: https://helm.min.io
+  version: 8.0.9
+digest: sha256:93f05e82629cc869da0969339e49c4ccf2d9c1fe78bcf31569a16db3e8e3fab0
+generated: "2021-01-22T16:29:37.548937+08:00"

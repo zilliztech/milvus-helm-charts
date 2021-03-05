@@ -1,0 +1,29 @@
+{{- if and .Values.pulsar.enabled (not .Values.standalone.enabled) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "milvus-ha.pulsar.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+{{- if .Values.pulsar.service.labels }}
+{{ toYaml .Values.pulsar.service.labels | indent 4 }}
+{{- end }}
+    component: "pulsar"
+{{- with .Values.pulsar.service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  type: ClusterIP
+  {{- if .Values.pulsar.service.clusterIP }}
+  clusterIP: {{ .Values.pulsar.service.clusterIP }}
+  {{- end }}
+  ports:
+    - name: pulsar
+      port: {{ .Values.pulsar.service.port }}
+      protocol: TCP
+      targetPort: pulsar
+  selector:
+{{ include "milvus-ha.matchLabels" . | indent 4 }}
+    component: "pulsar"
+{{- end }}

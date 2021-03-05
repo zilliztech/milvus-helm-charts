@@ -1,0 +1,71 @@
+{{- if and .Values.dataservice.enabled (not .Values.standalone.enabled) }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "milvus-ha.dataservice.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "dataservice"
+spec:
+  replicas: {{ .Values.dataservice.replicas }}
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: "dataservice"
+  template:
+    metadata:
+      labels:
+{{ include "milvus-ha.matchLabels" . | indent 8 }}
+        component: "dataservice"
+    spec:
+      {{- if .Values.image.all.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.all.pullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      containers:
+      - name: dataservice
+        image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
+        imagePullPolicy: {{ .Values.image.all.pullPolicy }}
+        args: [ "/milvus-distributed/bin/dataservice" ]
+        ports:
+          - name: dataservice
+            containerPort: 13333
+            protocol: TCP
+        resources:
+          {{- toYaml .Values.dataservice.resources | nindent 10 }}
+        volumeMounts:
+        - name: milvus-ha-config
+          mountPath: /milvus-distributed/configs/milvus.yaml
+          subPath: milvus.yaml
+          readOnly: true
+        - name: milvus-logs-disk
+          mountPath: {{ .Values.logsPersistence.mountPath | quote }}
+          subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
+
+      {{- with .Values.dataservice.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.dataservice.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      volumes:
+      - name: milvus-ha-config
+        configMap:
+          name: {{ template "milvus-ha.fullname" . }}
+      - name: milvus-logs-disk
+        {{- if .Values.logsPersistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.logsPersistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus-ha.fullname" . | trunc 58)) }}
+        {{- else }}
+        emptyDir: {}
+        {{- end }}
+{{- end }}

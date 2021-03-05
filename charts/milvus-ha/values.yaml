@@ -1,0 +1,270 @@
+image:
+  all:
+    repository: milvusdb/milvus-distributed
+    tag: latest
+    pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ##
+    # pullSecrets:
+    #   - myRegistryKeySecretName
+  pulsar:
+    repository: apachepulsar/pulsar
+    tag: 2.6.1
+    pullPolicy: IfNotPresent
+    # pullSecrets:
+    #   - myRegistryKeySecretName
+
+standalone:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  ## Expose the Milvus proxy service to be accessed from outside the cluster (LoadBalancer service).
+  ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
+  ## ref: http://kubernetes.io/docs/user-guide/services/
+  ##
+  service:
+    type: ClusterIP
+    port: 19530
+    nodePort: ""
+    annotations: {}
+    labels: {}
+
+    ## List of IP addresses at which the Milvus proxy service is available
+    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+    ##
+    externalIPs: []
+    #   - externalIp1
+
+    # LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
+    # set allowed inbound rules on the security group assigned to the master load balancer
+    loadBalancerSourceRanges:
+    - 0.0.0.0/0
+    # Optionally assign a known public LB IP
+    # loadBalancerIP: 1.2.3.4
+
+proxyservice:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  service:
+    type: ClusterIP
+    port: 21122
+    nodePort: ""
+    annotations: {}
+    labels: {}
+
+    externalIPs: []
+    #   - externalIp1
+
+    loadBalancerSourceRanges:
+    - 0.0.0.0/0
+    # Optionally assign a known public LB IP
+    # loadBalancerIP: 1.2.3.4
+
+proxynode:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  service:
+    type: ClusterIP
+    port: 19530
+    nodePort: ""
+    annotations: {}
+    labels: {}
+
+    externalIPs: []
+    #   - externalIp1
+
+    loadBalancerSourceRanges:
+    - 0.0.0.0/0
+    # Optionally assign a known public LB IP
+    # loadBalancerIP: 1.2.3.4
+
+master:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  service:
+    port: 53100
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+queryservice:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  service:
+    port: 19531
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+querynode:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+indexservice:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  service:
+    port: 31000
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+indexnode:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+dataservice:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  service:
+    port: 13333
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+datanode:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+pulsar:
+  enabled: true
+  replicas: 1
+  resources: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+
+  service:
+    port: 6650
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+log:
+  level: "debug"
+  file:
+    maxSize: 300 # MB
+    maxAge: 10 # day
+    maxBackups: 20
+  dev: true
+  format: "text" # text/json
+
+logsPersistence:
+  mountPath: "/var/logs/milvus"
+  ## If true, alertmanager will create/use a Persistent Volume Claim
+  ## If false, use emptyDir
+  ##
+  enabled: false
+  annotations: {}
+  #  helm.sh/resource-policy: keep
+  persistentVolumeClaim:
+    existingClaim: ""
+    ## milvus logs Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.
+    ##
+    storageClass:
+    accessModes: ReadWriteMany
+    size: 5Gi
+    subPath: ""
+
+## Configuration values for the minio dependency
+## ref: https://github.com/minio/charts/blob/master/README.md
+##
+
+minio:
+  enabled: true
+  name: minio
+  image:
+    tag: "RELEASE.2020-11-06T23-17-07Z"
+    pullPolicy: IfNotPresent
+  accessKey: minioadmin
+  secretKey: minioadmin
+
+  service:
+    type: ClusterIP
+    port: 2379
+
+  persistence:
+    enabled: true
+    existingClaim: ""
+    storageClass:
+    accessMode: ReadWriteOnce
+    size: 500Gi
+
+## Configuration values for the etcd dependency
+## ref: https://artifacthub.io/packages/helm/bitnami/etcd
+##
+
+etcd:
+  enabled: true
+  name: etcd
+  image:
+    tag: "3.4.14-debian-10-r44"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 2379
+    peerPort: 2380
+
+  auth:
+    rbac:
+      enabled: false
+
+  persistence:
+    enabled: true
+    storageClass:
+    accessMode: ReadWriteOnce
+    size: 8Gi
+

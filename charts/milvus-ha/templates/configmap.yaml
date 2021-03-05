@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "milvus-ha.fullname" . }}
+data:
+  milvus.yaml: |
+    {{- include "milvus-ha.config" . | nindent 4 }}
+
+{{- range $key, $value := .Values.extraConfigFiles }}
+  {{ $key }}: |-
+{{ $value | indent 4 }}
+{{- end }}

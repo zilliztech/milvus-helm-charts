@@ -1,0 +1,29 @@
+{{- if and .Values.indexservice.enabled (not .Values.standalone.enabled) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "milvus-ha.indexservice.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+{{- if .Values.indexservice.service.labels }}
+{{ toYaml .Values.indexservice.service.labels | indent 4 }}
+{{- end }}
+    component: "indexservice"
+{{- with .Values.indexservice.service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  type: ClusterIP
+  {{- if .Values.indexservice.service.clusterIP }}
+  clusterIP: {{ .Values.indexservice.service.clusterIP }}
+  {{- end }}
+  ports:
+    - name: indexservice
+      port: {{ .Values.indexservice.service.port }}
+      protocol: TCP
+      targetPort: indexservice
+  selector:
+{{ include "milvus-ha.matchLabels" . | indent 4 }}
+    component: "indexservice"
+{{- end }}

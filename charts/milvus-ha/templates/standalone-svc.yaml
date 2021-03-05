@@ -1,0 +1,45 @@
+{{- if .Values.standalone.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "milvus-ha.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+{{- if .Values.standalone.service.labels }}
+{{ toYaml .Values.standalone.service.labels | indent 4 }}
+{{- end }}
+    component: "standalone"
+{{- with .Values.standalone.service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+{{- if (or (eq .Values.standalone.service.type "ClusterIP") (empty .Values.standalone.service.type)) }}
+  type: ClusterIP
+  {{- if .Values.standalone.service.clusterIP }}
+  clusterIP: {{ .Values.standalone.service.clusterIP }}
+  {{- end }}
+{{- else if eq .Values.standalone.service.type "LoadBalancer" }}
+  type: LoadBalancer
+  {{- if .Values.standalone.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.standalone.service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.standalone.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{ toYaml .Values.standalone.service.loadBalancerSourceRanges | indent 4 }}
+  {{- end -}}
+{{- else }}
+  type: {{ .Values.standalone.service.type }}
+{{- end }}
+  ports:
+    - name: standalone
+      port: {{ .Values.standalone.service.port }}
+      protocol: TCP
+      targetPort: standalone
+{{- if (and (eq .Values.standalone.service.type "NodePort") (not (empty .Values.standalone.service.nodePort))) }}
+      nodePort: {{.Values.standalone.service.nodePort}}
+{{- end }}
+  selector:
+{{ include "milvus-ha.matchLabels" . | indent 4 }}
+    component: "standalone"
+{{- end }}
