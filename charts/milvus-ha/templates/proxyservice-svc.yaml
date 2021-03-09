@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "milvus-ha.fullname" . }}
+  name: {{ template "milvus-ha.proxyservice.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
 {{- if .Values.proxyservice.service.labels }}
