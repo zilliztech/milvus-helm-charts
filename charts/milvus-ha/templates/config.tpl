@@ -53,7 +53,7 @@ master:
 
 proxyService:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.fullname" . }}
+  address: {{ template "milvus-ha.proxyservice.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
