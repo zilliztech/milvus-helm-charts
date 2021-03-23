@@ -29,8 +29,8 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus-distributed/bin/querynode" ]
-        env:
         {{- if .Values.querynode.extraEnv }}
+        env:
           {{- toYaml .Values.querynode.extraEnv | nindent 10 }}
         {{- end }}
         env:

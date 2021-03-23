@@ -29,8 +29,8 @@ spec:
         image: "{{ .Values.image.pulsar.repository }}:{{ .Values.image.pulsar.tag }}"
         imagePullPolicy: {{ .Values.image.pulsar.pullPolicy }}
         command: ["bin/pulsar", "standalone"]
-        env:
         {{- if .Values.pulsar.extraEnv }}
+        env:
           {{- toYaml .Values.pulsar.extraEnv | nindent 10 }}
         {{- end }}
         ports:

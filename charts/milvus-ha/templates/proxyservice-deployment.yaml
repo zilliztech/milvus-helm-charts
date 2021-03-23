@@ -29,8 +29,8 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus-distributed/bin/proxyservice" ]
-        env:
         {{- if .Values.proxyservice.extraEnv }}
+        env:
           {{- toYaml .Values.proxyservice.extraEnv | nindent 10 }}
         {{- end }}
         ports:

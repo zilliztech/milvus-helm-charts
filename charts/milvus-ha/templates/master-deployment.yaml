@@ -29,8 +29,8 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus-distributed/bin/masterservice" ]
-        env:
         {{- if .Values.master.extraEnv }}
+        env:
           {{- toYaml .Values.master.extraEnv | nindent 10 }}
         {{- end }}
         ports:
