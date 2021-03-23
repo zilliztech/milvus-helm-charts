@@ -29,6 +29,10 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus-distributed/bin/proxynode" ]
+        env:
+        {{- if .Values.proxynode.extraEnv }}
+          {{- toYaml .Values.proxynode.extraEnv | nindent 10 }}
+        {{- end }}
         ports:
           - name: proxynode
             containerPort: 19530

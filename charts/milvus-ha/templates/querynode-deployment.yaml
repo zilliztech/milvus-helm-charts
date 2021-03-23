@@ -30,6 +30,10 @@ spec:
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus-distributed/bin/querynode" ]
         env:
+        {{- if .Values.querynode.extraEnv }}
+          {{- toYaml .Values.querynode.extraEnv | nindent 10 }}
+        {{- end }}
+        env:
         - name: QUERY_NODE_ID
           value: "1"
         ports:

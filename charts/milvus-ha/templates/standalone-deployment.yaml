@@ -29,6 +29,10 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus-distributed/bin/singlenode" ]
+        env:
+        {{- if .Values.standalone.extraEnv }}
+          {{- toYaml .Values.standalone.extraEnv | nindent 10 }}
+        {{- end }}
         ports:
           - name: standalone
             containerPort: 19530

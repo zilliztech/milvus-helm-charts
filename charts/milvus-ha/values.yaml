@@ -23,6 +23,7 @@ standalone:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
   ## Expose the Milvus proxy service to be accessed from outside the cluster (LoadBalancer service).
   ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
@@ -55,6 +56,7 @@ proxyservice:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
   service:
     type: ClusterIP
@@ -78,6 +80,7 @@ proxynode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
   service:
     type: ClusterIP
@@ -101,6 +104,7 @@ master:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
   service:
     port: 53100
@@ -115,6 +119,7 @@ queryservice:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
   service:
     port: 19531
@@ -129,6 +134,7 @@ querynode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
 indexservice:
   enabled: true
@@ -137,6 +143,7 @@ indexservice:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
   service:
     port: 31000
@@ -151,6 +158,7 @@ indexnode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
 dataservice:
   enabled: true
@@ -159,6 +167,7 @@ dataservice:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
   service:
     port: 13333
@@ -173,6 +182,7 @@ datanode:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
 pulsar:
   enabled: true
@@ -181,6 +191,7 @@ pulsar:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  extraEnv: []
 
   service:
     port: 6650

@@ -29,6 +29,10 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus-distributed/bin/indexnode" ]
+        env:
+        {{- if .Values.indexnode.extraEnv }}
+          {{- toYaml .Values.indexnode.extraEnv | nindent 10 }}
+        {{- end }}
         ports:
           - name: indexnode
             containerPort: 21121

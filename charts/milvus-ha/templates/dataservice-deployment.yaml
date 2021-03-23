@@ -29,6 +29,10 @@ spec:
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus-distributed/bin/dataservice" ]
+        env:
+        {{- if .Values.dataservice.extraEnv }}
+          {{- toYaml .Values.dataservice.extraEnv | nindent 10 }}
+        {{- end }}
         ports:
           - name: dataservice
             containerPort: 13333
