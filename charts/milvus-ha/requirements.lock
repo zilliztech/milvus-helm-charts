@@ -5,5 +5,8 @@ dependencies:
 - name: minio
   repository: https://helm.min.io
   version: 8.0.9
-digest: sha256:93f05e82629cc869da0969339e49c4ccf2d9c1fe78bcf31569a16db3e8e3fab0
-generated: "2021-01-22T16:29:37.548937+08:00"
+- name: pulsar
+  repository: https://helm.kafkaesque.io
+  version: 1.0.31
+digest: sha256:cc727a4b0780617262014ca23f088610cbf62902353cbd0eaf549741e2b11f11
+generated: "2021-03-25T19:06:02.887479+08:00"
