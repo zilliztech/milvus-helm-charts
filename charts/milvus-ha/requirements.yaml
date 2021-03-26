@@ -11,3 +11,9 @@ dependencies:
   condition: minio.enabled
   tags:
     - minio
+- name: pulsar
+  version: 1.0.31
+  repository: https://helm.kafkaesque.io
+  condition: pulsar.enabled
+  tags:
+    - pulsar
