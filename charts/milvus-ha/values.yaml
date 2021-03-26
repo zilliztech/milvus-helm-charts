@@ -284,7 +284,7 @@ etcd:
 ##
 
 pulsar:
-  enabled: true
+  enabled: false
   name: pulsar
 
   fullnameOverride: ""
