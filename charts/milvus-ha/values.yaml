@@ -9,12 +9,6 @@ image:
     ##
     # pullSecrets:
     #   - myRegistryKeySecretName
-  pulsar:
-    repository: apachepulsar/pulsar
-    tag: 2.6.1
-    pullPolicy: IfNotPresent
-    # pullSecrets:
-    #   - myRegistryKeySecretName
 
 standalone:
   enabled: true
@@ -184,14 +178,18 @@ datanode:
   tolerations: []
   extraEnv: []
 
-pulsar:
-  enabled: true
+pulsarStandalone:
+  image:
+    repository: apachepulsar/pulsar
+    tag: 2.6.1
+    pullPolicy: IfNotPresent
+    # pullSecrets:
+    #   - myRegistryKeySecretName
   replicas: 1
   resources: {}
   nodeSelector: {}
   affinity: {}
   tolerations: []
-  extraEnv: []
 
   service:
     port: 6650
