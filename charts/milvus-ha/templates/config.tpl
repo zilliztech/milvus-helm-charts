@@ -37,8 +37,13 @@ minio:
   bucketName: "a-bucket"
 
 pulsar:
+{{- if .Values.pulsar.enabled }}
   address: {{ .Release.Name }}-{{ .Values.pulsar.name }}-proxy
   port: 6650
+{{- else }}
+  address: {{ template "milvus-ha.pulsar.fullname" . }}
+  port: {{ .Values.pulsarStandalone.service.port }}
+{{- end }}
   authentication: false
   user: user-default
   token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb2UifQ.ipevRNuRP6HflG8cFKnmUPtypruRC4fb1DWtoLL62SY
