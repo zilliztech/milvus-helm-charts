@@ -28,7 +28,7 @@ spec:
       - name: dataservice
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus-distributed/bin/dataservice" ]
+        args: [ "/milvus-distributed/bin/milvus", "run", "dataservice" ]
         {{- if .Values.dataservice.extraEnv }}
         env:
           {{- toYaml .Values.dataservice.extraEnv | nindent 10 }}
