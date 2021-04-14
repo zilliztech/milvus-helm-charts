@@ -28,7 +28,7 @@ spec:
       - name: indexservice
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus-distributed/bin/indexservice" ]
+        args: [ "/milvus-distributed/bin/milvus", "run", "indexservice" ]
         {{- if .Values.indexservice.extraEnv }}
         env:
           {{- toYaml .Values.indexservice.extraEnv | nindent 10 }}
