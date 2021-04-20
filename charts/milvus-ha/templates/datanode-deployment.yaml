@@ -28,7 +28,7 @@ spec:
       - name: datanode
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus-distributed/bin/datanode" ]
+        args: [ "/milvus-distributed/bin/milvus", "run", "datanode" ]
         {{- if .Values.datanode.extraEnv }}
         env:
           {{- toYaml .Values.datanode.extraEnv | nindent 10 }}
