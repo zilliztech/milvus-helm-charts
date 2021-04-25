@@ -28,7 +28,7 @@ spec:
       - name: datanode
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus-distributed/bin/milvus", "run", "datanode" ]
+        args: [ "/milvus/bin/milvus", "run", "datanode" ]
         {{- if .Values.datanode.extraEnv }}
         env:
           {{- toYaml .Values.datanode.extraEnv | nindent 10 }}
@@ -41,7 +41,7 @@ spec:
           {{- toYaml .Values.datanode.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-ha-config
-          mountPath: /milvus-distributed/configs/milvus.yaml
+          mountPath: /milvus/configs/milvus.yaml
           subPath: milvus.yaml
           readOnly: true
         - name: milvus-logs-disk
