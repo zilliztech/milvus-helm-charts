@@ -28,7 +28,7 @@ spec:
       - name: queryservice
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus-distributed/bin/milvus", "run", "queryservice" ]
+        args: [ "/milvus/bin/milvus", "run", "queryservice" ]
         {{- if .Values.queryservice.extraEnv }}
         env:
           {{- toYaml .Values.queryservice.extraEnv | nindent 10 }}
@@ -41,7 +41,7 @@ spec:
           {{- toYaml .Values.queryservice.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-ha-config
-          mountPath: /milvus-distributed/configs/milvus.yaml
+          mountPath: /milvus/configs/milvus.yaml
           subPath: milvus.yaml
           readOnly: true
         - name: milvus-logs-disk
