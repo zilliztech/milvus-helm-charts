@@ -1,6 +1,6 @@
 image:
   all:
-    repository: milvusdb/milvus
+    repository: milvusdb/milvus-distributed
     tag: latest
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
