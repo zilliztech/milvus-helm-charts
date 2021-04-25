@@ -13,8 +13,7 @@ keywords:
 home: https://milvus.io/
 icon: https://raw.githubusercontent.com/milvus-io/docs/master/assets/milvus_logo.png
 sources:
-  - https://github.com/zilliztech/milvus-distributed
-  - https://github.com/zilliztech/milvus-ha
+  - https://github.com/milvus-io/milvus
 maintainers:
   - email: zhifeng.zhang@zilliz.com
     name: jeffoverflow
