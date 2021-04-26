@@ -28,7 +28,7 @@ spec:
       - name: standalone
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus/bin/singlenode" ]
+        args: [ "/milvus/bin/standalone" ]
         {{- if .Values.standalone.extraEnv }}
         env:
           {{- toYaml .Values.standalone.extraEnv | nindent 10 }}
