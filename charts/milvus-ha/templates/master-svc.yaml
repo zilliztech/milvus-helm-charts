@@ -23,6 +23,12 @@ spec:
       port: {{ .Values.master.service.port }}
       protocol: TCP
       targetPort: master
+    {{- if .Values.metrics.enabled }}
+    - name: metrics
+      protocol: TCP
+      port: 9091
+      targetPort: 9091
+    {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}
     component: "master"

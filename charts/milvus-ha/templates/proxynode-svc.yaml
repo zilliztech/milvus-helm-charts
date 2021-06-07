@@ -39,6 +39,12 @@ spec:
 {{- if (and (eq .Values.proxynode.service.type "NodePort") (not (empty .Values.proxynode.service.nodePort))) }}
       nodePort: {{.Values.proxynode.service.nodePort}}
 {{- end }}
+    {{- if .Values.metrics.enabled }}
+    - name: metrics
+      protocol: TCP
+      port: 9091
+      targetPort: 9091
+    {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}
     component: "proxynode"
