@@ -343,3 +343,10 @@ pulsar:
         cpu: 0.3
     configData:
       PULSAR_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m\""
+
+
+metrics:
+  enabled: true
+
+servicemonitor:
+  enabled: false

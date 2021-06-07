@@ -39,6 +39,12 @@ spec:
 {{- if (and (eq .Values.standalone.service.type "NodePort") (not (empty .Values.standalone.service.nodePort))) }}
       nodePort: {{.Values.standalone.service.nodePort}}
 {{- end }}
+    {{- if .Values.metrics.enabled }}
+    - name: metrics
+      protocol: TCP
+      port: 9091
+      targetPort: 9091
+    {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}
     component: "standalone"

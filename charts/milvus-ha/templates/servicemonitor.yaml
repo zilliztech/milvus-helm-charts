@@ -1,0 +1,252 @@
+{{- if .Values.servicemonitor.enabled }}
+
+{{- if .Values.standalone.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "milvus-ha.standalone.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "standalone"
+spec:
+  endpoints:
+    - honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: standalone
+  targetLabels:
+    - app.kubernetes.io/name
+    - app.kubernetes.io/instance
+    - component
+{{- end }}
+
+---
+{{- if and .Values.datanode.enabled (not .Values.standalone.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "milvus-ha.datanode.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "datanode"
+spec:
+  endpoints:
+    - honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: datanode
+  targetLabels:
+    - app.kubernetes.io/name
+    - app.kubernetes.io/instance
+    - component
+{{- end }}
+
+---
+{{- if and .Values.dataservice.enabled (not .Values.standalone.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "milvus-ha.dataservice.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "dataservice"
+spec:
+  endpoints:
+    - honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: dataservice
+  targetLabels:
+    - app.kubernetes.io/name
+    - app.kubernetes.io/instance
+    - component
+{{- end }}
+
+---
+{{- if and .Values.indexnode.enabled (not .Values.standalone.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "milvus-ha.indexnode.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "indexnode"
+spec:
+  endpoints:
+    - honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: indexnode
+  targetLabels:
+    - app.kubernetes.io/name
+    - app.kubernetes.io/instance
+    - component
+{{- end }}
+
+---
+{{- if and .Values.indexservice.enabled (not .Values.standalone.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "milvus-ha.indexservice.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "indexservice"
+spec:
+  endpoints:
+    - honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: indexservice
+  targetLabels:
+    - app.kubernetes.io/name
+    - app.kubernetes.io/instance
+    - component
+{{- end }}
+
+---
+{{- if and .Values.master.enabled (not .Values.standalone.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "milvus-ha.master.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "master"
+spec:
+  endpoints:
+    - honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: master
+  targetLabels:
+    - app.kubernetes.io/name
+    - app.kubernetes.io/instance
+    - component
+{{- end }}
+
+---
+{{- if and .Values.proxynode.enabled (not .Values.standalone.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "milvus-ha.proxynode.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "proxynode"
+spec:
+  endpoints:
+    - honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: proxynode
+  targetLabels:
+    - app.kubernetes.io/name
+    - app.kubernetes.io/instance
+    - component
+{{- end }}
+
+---
+{{- if and .Values.proxyservice.enabled (not .Values.standalone.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "milvus-ha.proxyservice.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "proxyservice"
+spec:
+  endpoints:
+    - honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: proxyservice
+  targetLabels:
+    - app.kubernetes.io/name
+    - app.kubernetes.io/instance
+    - component
+{{- end }}
+
+---
+{{- if and .Values.querynode.enabled (not .Values.standalone.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "milvus-ha.querynode.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "querynode"
+spec:
+  endpoints:
+    - honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: querynode
+  targetLabels:
+    - app.kubernetes.io/name
+    - app.kubernetes.io/instance
+    - component
+{{- end }}
+
+---
+{{- if and .Values.queryservice.enabled (not .Values.standalone.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "milvus-ha.queryservice.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "queryservice"
+spec:
+  endpoints:
+    - honorLabels: true
+      interval: 60s
+      path: /metrics
+      port: metrics
+  selector:
+    matchLabels:
+{{ include "milvus-ha.matchLabels" . | indent 6 }}
+      component: queryservice
+  targetLabels:
+    - app.kubernetes.io/name
+    - app.kubernetes.io/instance
+    - component
+{{- end }}
+
+{{- end }}

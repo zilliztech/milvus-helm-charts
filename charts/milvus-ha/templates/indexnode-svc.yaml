@@ -1,0 +1,22 @@
+{{- if .Values.metrics.enabled }}
+{{- if and .Values.indexnode.enabled (not .Values.standalone.enabled) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "milvus-ha.indexnode.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+    component: "indexnode"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: metrics
+      protocol: TCP
+      port: 9091
+      targetPort: 9091
+  selector:
+{{ include "milvus-ha.matchLabels" . | indent 4 }}
+    component: "indexnode"
+{{- end }}
+{{- end }}
