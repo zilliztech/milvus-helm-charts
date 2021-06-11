@@ -43,30 +43,6 @@ standalone:
     # Optionally assign a known public LB IP
     # loadBalancerIP: 1.2.3.4
 
-proxyservice:
-  enabled: true
-  replicas: 1
-  resources: {}
-  nodeSelector: {}
-  affinity: {}
-  tolerations: []
-  extraEnv: []
-
-  service:
-    type: ClusterIP
-    port: 21122
-    nodePort: ""
-    annotations: {}
-    labels: {}
-
-    externalIPs: []
-    #   - externalIp1
-
-    loadBalancerSourceRanges:
-    - 0.0.0.0/0
-    # Optionally assign a known public LB IP
-    # loadBalancerIP: 1.2.3.4
-
 proxynode:
   enabled: true
   replicas: 1

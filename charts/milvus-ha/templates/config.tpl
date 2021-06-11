@@ -56,14 +56,6 @@ master:
 {{- end }}
   port: {{ .Values.master.service.port }}
 
-proxyService:
-{{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.proxyservice.fullname" . }}
-{{- else }}
-  address: localhost
-{{- end }}
-  port: {{ .Values.proxyservice.service.port }}
-
 proxyNode:
   port: 19530
 

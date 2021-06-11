@@ -175,31 +175,6 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.proxyservice.enabled (not .Values.standalone.enabled) }}
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: {{ template "milvus-ha.proxyservice.fullname" . }}
-  labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
-    component: "proxyservice"
-spec:
-  endpoints:
-    - honorLabels: true
-      interval: 60s
-      path: /metrics
-      port: metrics
-  selector:
-    matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: proxyservice
-  targetLabels:
-    - app.kubernetes.io/name
-    - app.kubernetes.io/instance
-    - component
-{{- end }}
-
----
 {{- if and .Values.querynode.enabled (not .Values.standalone.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
