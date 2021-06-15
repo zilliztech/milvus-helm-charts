@@ -25,10 +25,17 @@ etcd:
   kvSubPath: kv # kvRootPath = rootPath + '/' + kvSubPath
 
 minio:
+{{- if .Values.externalMinio.enabled }}
+  address: {{ .Values.externalMinio.address }}
+  port: {{ .Values.externalMinio.port }}
+  accessKeyID: {{ .Values.externalMinio.accessKey }}
+  secretAccessKey: {{ .Values.externalMinio.secretKey }}
+{{- else }}
   address: {{ .Release.Name }}-{{ .Values.minio.name }}
   port: {{ .Values.minio.service.port }}
   accessKeyID: {{ .Values.minio.accessKey }}
   secretAccessKey: {{ .Values.minio.secretKey }}
+{{- end }}
   useSSL: false
   bucketName: "a-bucket"
 

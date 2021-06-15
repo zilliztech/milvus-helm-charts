@@ -227,6 +227,17 @@ minio:
     accessMode: ReadWriteOnce
     size: 500Gi
 
+###################################
+# External minio
+# - these configs are only used when `externalMinio.enabled` is true
+###################################
+externalMinio:
+  enabled: false
+  address: localhost
+  port: 9000
+  accessKeyID: minioadmin
+  secretAccessKey: minioadmin
+
 ## Configuration values for the etcd dependency
 ## ref: https://artifacthub.io/packages/helm/bitnami/etcd
 ##
