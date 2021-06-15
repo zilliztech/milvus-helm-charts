@@ -173,6 +173,12 @@ pulsarStandalone:
     labels: {}
     clusterIP: ""
 
+metrics:
+  enabled: true
+
+servicemonitor:
+  enabled: false
+
 log:
   level: "debug"
   file:
@@ -227,17 +233,6 @@ minio:
     accessMode: ReadWriteOnce
     size: 500Gi
 
-###################################
-# External minio
-# - these configs are only used when `externalMinio.enabled` is true
-###################################
-externalMinio:
-  enabled: false
-  address: localhost
-  port: 9000
-  accessKeyID: minioadmin
-  secretAccessKey: minioadmin
-
 ## Configuration values for the etcd dependency
 ## ref: https://artifacthub.io/packages/helm/bitnami/etcd
 ##
@@ -263,17 +258,6 @@ etcd:
     storageClass:
     accessMode: ReadWriteOnce
     size: 8Gi
-
-###################################
-# External etcd
-# - these configs are only used when `externalEtcd.enabled` is true
-###################################
-externalEtcd:
-  enabled: false
-  ## the endpoints of the external etcd
-  ##
-  endpoints:
-    - localhost:2379
 
 ## Configuration values for the pulsar dependency
 ## ref: https://github.com/kafkaesque-io/pulsar-helm-chart
@@ -343,8 +327,24 @@ pulsar:
       PULSAR_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m\""
 
 
-metrics:
-  enabled: true
-
-servicemonitor:
+###################################
+# External minio
+# - these configs are only used when `externalMinio.enabled` is true
+###################################
+externalMinio:
   enabled: false
+  address: localhost
+  port: 9000
+  accessKeyID: minioadmin
+  secretAccessKey: minioadmin
+
+###################################
+# External etcd
+# - these configs are only used when `externalEtcd.enabled` is true
+###################################
+externalEtcd:
+  enabled: false
+  ## the endpoints of the external etcd
+  ##
+  endpoints:
+    - localhost:2379
