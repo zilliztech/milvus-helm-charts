@@ -253,6 +253,17 @@ etcd:
     accessMode: ReadWriteOnce
     size: 8Gi
 
+###################################
+# External etcd
+# - these configs are only used when `externalEtcd.enabled` is true
+###################################
+externalEtcd:
+  enabled: false
+  ## the endpoints of the external etcd
+  ##
+  endpoints:
+    - localhost:2379
+
 ## Configuration values for the pulsar dependency
 ## ref: https://github.com/kafkaesque-io/pulsar-helm-chart
 ##

@@ -10,23 +10,19 @@
 # is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 # or implied. See the License for the specific language governing permissions and limitations under the License.
 
-
-nodeID: # will be deprecated after v0.2
-  proxyIDList: [0]
-  queryNodeIDList: [1]
-  dataNodeIDList: [2]
-
 etcd:
-  address: {{ .Release.Name }}-{{ .Values.etcd.name }}
-  port: {{ .Values.etcd.service.port }}
+{{- if .Values.externalEtcd.enabled }}
+  endpoints:
+  {{- range .Values.externalEtcd.endpoints }}
+    - {{ . }}
+  {{- end }}
+{{- else }}
+  endpoints:
+    - {{ .Release.Name }}-{{ .Values.etcd.name }}:{{ .Values.etcd.service.port }}
+{{- end }}
   rootPath: by-dev
   metaSubPath: meta # metaRootPath = rootPath + '/' + metaSubPath
   kvSubPath: kv # kvRootPath = rootPath + '/' + kvSubPath
-  segFlushMetaSubPath: writer/segment
-  ddlFlushMetaSubPath: writer/ddl
-  writeNodeSegKvSubPath: writer/segment # GOOSE TODO: remove this
-  writeNodeDDLKvSubPath: writer/ddl # GOOSE TODO: remove this
-  segThreshold: 10000
 
 minio:
   address: {{ .Release.Name }}-{{ .Values.minio.name }}
@@ -44,9 +40,6 @@ pulsar:
   address: {{ template "milvus-ha.pulsar.fullname" . }}
   port: {{ .Values.pulsarStandalone.service.port }}
 {{- end }}
-  authentication: false
-  user: user-default
-  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb2UifQ.ipevRNuRP6HflG8cFKnmUPtypruRC4fb1DWtoLL62SY
 
 master:
 {{- if not .Values.standalone.enabled }}
