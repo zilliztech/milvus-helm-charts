@@ -348,3 +348,13 @@ externalEtcd:
   ##
   endpoints:
     - localhost:2379
+
+###################################
+# External pulsar
+# - these configs are only used when `externalPulsar.enabled` is true
+###################################
+externalPulsar:
+  enabled: false
+  address: localhost
+  port: 6650
+  

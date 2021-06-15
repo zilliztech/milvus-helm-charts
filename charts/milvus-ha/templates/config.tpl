@@ -40,7 +40,10 @@ minio:
   bucketName: "a-bucket"
 
 pulsar:
-{{- if .Values.pulsar.enabled }}
+{{- if .Values.externalPulsar.enabled }}
+  address: {{ .Values.externalPulsar.address }}
+  port: {{ .Values.externalPulsar.port }}
+{{- else if .Values.pulsar.enabled }}
   address: {{ .Release.Name }}-{{ .Values.pulsar.name }}-proxy
   port: 6650
 {{- else }}
