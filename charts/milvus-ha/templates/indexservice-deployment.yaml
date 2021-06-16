@@ -1,22 +1,22 @@
-{{- if and .Values.indexservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.indexCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus-ha.indexservice.fullname" . }}
+  name: {{ template "milvus-ha.index-coordinator.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "indexservice"
+    component: "index-coordinator"
 spec:
-  replicas: {{ .Values.indexservice.replicas }}
+  replicas: {{ .Values.indexCoordinator.replicas }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: "indexservice"
+      component: "index-coordinator"
   template:
     metadata:
       labels:
 {{ include "milvus-ha.matchLabels" . | indent 8 }}
-        component: "indexservice"
+        component: "index-coordinator"
     spec:
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
@@ -25,20 +25,20 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-      - name: indexservice
+      - name: index-coordinator
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus/bin/milvus", "run", "indexservice" ]
-        {{- if .Values.indexservice.extraEnv }}
+        {{- if .Values.indexCoordinator.extraEnv }}
         env:
-          {{- toYaml .Values.indexservice.extraEnv | nindent 10 }}
+          {{- toYaml .Values.indexCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: indexservice
+          - name: index
             containerPort: 31000
             protocol: TCP
         resources:
-          {{- toYaml .Values.indexservice.resources | nindent 10 }}
+          {{- toYaml .Values.indexCoordinator.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-ha-config
           mountPath: /milvus/configs/milvus.yaml
@@ -48,15 +48,15 @@ spec:
           mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
 
-      {{- with .Values.indexservice.nodeSelector }}
+      {{- with .Values.indexCoordinator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.indexservice.affinity }}
+      {{- with .Values.indexCoordinator.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.indexservice.tolerations }}
+      {{- with .Values.indexCoordinator.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

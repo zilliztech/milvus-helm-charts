@@ -88,11 +88,11 @@ queryNode:
 
 indexService:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.indexservice.fullname" . }}
+  address: {{ template "milvus-ha.index-coordinator.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
-  port: {{ .Values.indexservice.service.port }}
+  port: {{ .Values.indexCoordinator.service.port }}
 
 indexNode:
   port: 21121
