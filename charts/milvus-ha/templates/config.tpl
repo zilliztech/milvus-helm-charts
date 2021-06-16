@@ -45,7 +45,16 @@ pulsar:
   port: {{ .Values.externalPulsar.port }}
 {{- else if .Values.pulsar.enabled }}
   address: {{ .Release.Name }}-{{ .Values.pulsar.name }}-proxy
-  port: 6650
+  {{- $httpPort := "" -}}
+  {{- $httpsPort := "" -}}
+  {{- range .Values.pulsar.proxy.service.ports }}
+  {{- if eq .name "pulsar" }}
+  {{- $httpPort = .port -}}
+  {{- else if eq .name "pulsarssl" }}
+  {{- $httpsPort = .port -}}
+  {{- end }}
+  {{- end }}
+  port: {{ $httpsPort | default $httpPort }}
 {{- else }}
   address: {{ template "milvus-ha.pulsar.fullname" . }}
   port: {{ .Values.pulsarStandalone.service.port }}
