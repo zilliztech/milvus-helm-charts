@@ -173,6 +173,12 @@ pulsarStandalone:
     labels: {}
     clusterIP: ""
 
+metrics:
+  enabled: true
+
+servicemonitor:
+  enabled: false
+
 log:
   level: "debug"
   file:
@@ -321,8 +327,34 @@ pulsar:
       PULSAR_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m\""
 
 
-metrics:
-  enabled: true
-
-servicemonitor:
+###################################
+# External minio
+# - these configs are only used when `externalMinio.enabled` is true
+###################################
+externalMinio:
   enabled: false
+  address: localhost
+  port: 9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+
+###################################
+# External etcd
+# - these configs are only used when `externalEtcd.enabled` is true
+###################################
+externalEtcd:
+  enabled: false
+  ## the endpoints of the external etcd
+  ##
+  endpoints:
+    - localhost:2379
+
+###################################
+# External pulsar
+# - these configs are only used when `externalPulsar.enabled` is true
+###################################
+externalPulsar:
+  enabled: false
+  address: localhost
+  port: 6650
+  
