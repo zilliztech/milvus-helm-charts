@@ -19,10 +19,10 @@ spec:
   clusterIP: {{ .Values.rootCoordinator.service.clusterIP }}
   {{- end }}
   ports:
-    - name: root-coordinator
+    - name: root
       port: {{ .Values.rootCoordinator.service.port }}
       protocol: TCP
-      targetPort: root-coordinator
+      targetPort: root
     {{- if .Values.metrics.enabled }}
     - name: metrics
       protocol: TCP

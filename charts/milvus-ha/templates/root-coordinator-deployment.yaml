@@ -34,7 +34,7 @@ spec:
           {{- toYaml .Values.rootCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: root-coordinator
+          - name: root
             containerPort: 53100
             protocol: TCP
         resources:
