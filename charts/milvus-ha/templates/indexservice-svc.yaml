@@ -1,28 +1,28 @@
-{{- if and .Values.indexservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.indexCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "milvus-ha.indexservice.fullname" . }}
+  name: {{ template "milvus-ha.index-coordinator.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-{{- if .Values.indexservice.service.labels }}
-{{ toYaml .Values.indexservice.service.labels | indent 4 }}
+{{- if .Values.indexCoordinator.service.labels }}
+{{ toYaml .Values.indexCoordinator.service.labels | indent 4 }}
 {{- end }}
-    component: "indexservice"
-{{- with .Values.indexservice.service.annotations }}
+    component: "index-coordinator"
+{{- with .Values.indexCoordinator.service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
   type: ClusterIP
-  {{- if .Values.indexservice.service.clusterIP }}
-  clusterIP: {{ .Values.indexservice.service.clusterIP }}
+  {{- if .Values.indexCoordinator.service.clusterIP }}
+  clusterIP: {{ .Values.indexCoordinator.service.clusterIP }}
   {{- end }}
   ports:
-    - name: indexservice
-      port: {{ .Values.indexservice.service.port }}
+    - name: index
+      port: {{ .Values.indexCoordinator.service.port }}
       protocol: TCP
-      targetPort: indexservice
+      targetPort: index
     {{- if .Values.metrics.enabled }}
     - name: metrics
       protocol: TCP
@@ -31,5 +31,5 @@ spec:
     {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}
-    component: "indexservice"
+    component: "index-coordinator"
 {{- end }}
