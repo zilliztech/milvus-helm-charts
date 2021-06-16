@@ -335,8 +335,8 @@ externalMinio:
   enabled: false
   address: localhost
   port: 9000
-  accessKeyID: minioadmin
-  secretAccessKey: minioadmin
+  accessKey: minioadmin
+  secretKey: minioadmin
 
 ###################################
 # External etcd
