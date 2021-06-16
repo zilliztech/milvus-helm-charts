@@ -1,43 +1,43 @@
-{{- if and .Values.proxynode.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.proxy.enabled (not .Values.standalone.enabled) }}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "milvus-ha.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-{{- if .Values.proxynode.service.labels }}
-{{ toYaml .Values.proxynode.service.labels | indent 4 }}
+{{- if .Values.proxy.service.labels }}
+{{ toYaml .Values.proxy.service.labels | indent 4 }}
 {{- end }}
-    component: "proxynode"
-{{- with .Values.proxynode.service.annotations }}
+    component: "proxy"
+{{- with .Values.proxy.service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
-{{- if (or (eq .Values.proxynode.service.type "ClusterIP") (empty .Values.proxynode.service.type)) }}
+{{- if (or (eq .Values.proxy.service.type "ClusterIP") (empty .Values.proxy.service.type)) }}
   type: ClusterIP
-  {{- if .Values.proxynode.service.clusterIP }}
-  clusterIP: {{ .Values.proxynode.service.clusterIP }}
+  {{- if .Values.proxy.service.clusterIP }}
+  clusterIP: {{ .Values.proxy.service.clusterIP }}
   {{- end }}
-{{- else if eq .Values.proxynode.service.type "LoadBalancer" }}
+{{- else if eq .Values.proxy.service.type "LoadBalancer" }}
   type: LoadBalancer
-  {{- if .Values.proxynode.service.loadBalancerIP }}
-  loadBalancerIP: {{ .Values.proxynode.service.loadBalancerIP }}
+  {{- if .Values.proxy.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.proxy.service.loadBalancerIP }}
   {{- end }}
-  {{- if .Values.proxynode.service.loadBalancerSourceRanges }}
+  {{- if .Values.proxy.service.loadBalancerSourceRanges }}
   loadBalancerSourceRanges:
-{{ toYaml .Values.proxynode.service.loadBalancerSourceRanges | indent 4 }}
+{{ toYaml .Values.proxy.service.loadBalancerSourceRanges | indent 4 }}
   {{- end -}}
 {{- else }}
-  type: {{ .Values.proxynode.service.type }}
+  type: {{ .Values.proxy.service.type }}
 {{- end }}
   ports:
-    - name: proxynode
-      port: {{ .Values.proxynode.service.port }}
+    - name: proxy
+      port: {{ .Values.proxy.service.port }}
       protocol: TCP
-      targetPort: proxynode
-{{- if (and (eq .Values.proxynode.service.type "NodePort") (not (empty .Values.proxynode.service.nodePort))) }}
-      nodePort: {{.Values.proxynode.service.nodePort}}
+      targetPort: proxy
+{{- if (and (eq .Values.proxy.service.type "NodePort") (not (empty .Values.proxy.service.nodePort))) }}
+      nodePort: {{.Values.proxy.service.nodePort}}
 {{- end }}
     {{- if .Values.metrics.enabled }}
     - name: metrics
@@ -47,5 +47,5 @@ spec:
     {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}
-    component: "proxynode"
+    component: "proxy"
 {{- end }}

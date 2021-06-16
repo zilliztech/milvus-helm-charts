@@ -68,7 +68,7 @@ master:
 {{- end }}
   port: {{ .Values.rootCoordinator.service.port }}
 
-proxyNode:
+proxy:
   port: 19530
 
 queryService:
