@@ -125,14 +125,14 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.master.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.rootCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.master.fullname" . }}
+  name: {{ template "milvus-ha.root-coordinator.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "master"
+    component: "root-coordinator"
 spec:
   endpoints:
     - honorLabels: true
@@ -142,7 +142,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: master
+      component: root-coordinator
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance

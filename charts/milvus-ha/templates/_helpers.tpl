@@ -33,11 +33,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Create a default fully qualified master name.
+Create a default fully qualified Root Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.master.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-master
+{{- define "milvus-ha.root-coordinator.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-root-coordinator
 {{- end -}}
 
 {{/*

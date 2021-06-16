@@ -62,11 +62,11 @@ pulsar:
 
 master:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.master.fullname" . }}
+  address: {{ template "milvus-ha.root-coordinator.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
-  port: {{ .Values.master.service.port }}
+  port: {{ .Values.rootCoordinator.service.port }}
 
 proxyNode:
   port: 19530
