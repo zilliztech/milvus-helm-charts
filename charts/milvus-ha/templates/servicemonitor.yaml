@@ -200,14 +200,14 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.queryservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.queryCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.queryservice.fullname" . }}
+  name: {{ template "milvus-ha.query-coordinator.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "queryservice"
+    component: "query-coordinator"
 spec:
   endpoints:
     - honorLabels: true
@@ -217,7 +217,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: queryservice
+      component: query-coordinator
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance

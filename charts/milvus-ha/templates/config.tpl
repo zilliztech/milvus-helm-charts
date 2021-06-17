@@ -76,11 +76,11 @@ proxyNode:
 
 queryService:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.queryservice.fullname" . }}
+  address: {{ template "milvus-ha.query-coordinator.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
-  port: {{ .Values.queryservice.service.port }}
+  port: {{ .Values.queryCoordinator.service.port }}
 
 queryNode:
   gracefulTime: 5000 #ms

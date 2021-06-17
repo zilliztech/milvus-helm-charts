@@ -1,28 +1,28 @@
-{{- if and .Values.queryservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.queryCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "milvus-ha.queryservice.fullname" . }}
+  name: {{ template "milvus-ha.query-coordinator.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-{{- if .Values.queryservice.service.labels }}
-{{ toYaml .Values.queryservice.service.labels | indent 4 }}
+{{- if .Values.queryCoordinator.service.labels }}
+{{ toYaml .Values.queryCoordinator.service.labels | indent 4 }}
 {{- end }}
-    component: "queryservice"
-{{- with .Values.queryservice.service.annotations }}
+    component: "query-coordinator"
+{{- with .Values.queryCoordinator.service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
   type: ClusterIP
-  {{- if .Values.queryservice.service.clusterIP }}
-  clusterIP: {{ .Values.queryservice.service.clusterIP }}
+  {{- if .Values.queryCoordinator.service.clusterIP }}
+  clusterIP: {{ .Values.queryCoordinator.service.clusterIP }}
   {{- end }}
   ports:
-    - name: queryservice
-      port: {{ .Values.queryservice.service.port }}
+    - name: query
+      port: {{ .Values.queryCoordinator.service.port }}
       protocol: TCP
-      targetPort: queryservice
+      targetPort: query
     {{- if .Values.metrics.enabled }}
     - name: metrics
       protocol: TCP
@@ -31,5 +31,5 @@ spec:
     {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}
-    component: "queryservice"
+    component: "query-coordinator"
 {{- end }}
