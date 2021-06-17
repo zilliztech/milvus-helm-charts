@@ -41,11 +41,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Create a default fully qualified proxynode name.
+Create a default fully qualified Proxy name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.proxynode.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-proxynode
+{{- define "milvus-ha.proxy.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-proxy
 {{- end -}}
 
 {{/*

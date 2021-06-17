@@ -1,22 +1,22 @@
-{{- if and .Values.proxynode.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.proxy.enabled (not .Values.standalone.enabled) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus-ha.proxynode.fullname" . }}
+  name: {{ template "milvus-ha.proxy.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "proxynode"
+    component: "proxy"
 spec:
-  replicas: {{ .Values.proxynode.replicas }}
+  replicas: {{ .Values.proxy.replicas }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: "proxynode"
+      component: "proxy"
   template:
     metadata:
       labels:
 {{ include "milvus-ha.matchLabels" . | indent 8 }}
-        component: "proxynode"
+        component: "proxy"
     spec:
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
@@ -25,20 +25,20 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-      - name: proxynode
+      - name: proxy
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus/bin/milvus", "run", "proxynode" ]
-        {{- if .Values.proxynode.extraEnv }}
+        {{- if .Values.proxy.extraEnv }}
         env:
-          {{- toYaml .Values.proxynode.extraEnv | nindent 10 }}
+          {{- toYaml .Values.proxy.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: proxynode
+          - name: proxy
             containerPort: 19530
             protocol: TCP
         resources:
-          {{- toYaml .Values.proxynode.resources | nindent 10 }}
+          {{- toYaml .Values.proxy.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-ha-config
           mountPath: /milvus/configs/milvus.yaml
@@ -48,15 +48,15 @@ spec:
           mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
 
-      {{- with .Values.proxynode.nodeSelector }}
+      {{- with .Values.proxy.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.proxynode.affinity }}
+      {{- with .Values.proxy.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.proxynode.tolerations }}
+      {{- with .Values.proxy.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
