@@ -19,15 +19,15 @@ spec:
   clusterIP: {{ .Values.queryCoordinator.service.clusterIP }}
   {{- end }}
   ports:
-    - name: query
+    - name: querycoord
       port: {{ .Values.queryCoordinator.service.port }}
       protocol: TCP
-      targetPort: query
+      targetPort: querycoord
     {{- if .Values.metrics.enabled }}
     - name: metrics
       protocol: TCP
       port: 9091
-      targetPort: 9091
+      targetPort: metrics
     {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}

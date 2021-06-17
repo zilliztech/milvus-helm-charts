@@ -34,9 +34,14 @@ spec:
           {{- toYaml .Values.dataCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: data
+          - name: datacoord
             containerPort: 13333
             protocol: TCP
+          {{- if .Values.metrics.enabled }}
+          - name: metrics
+            containerPort: 9091
+            protocol: TCP
+          {{- end }}
         resources:
           {{- toYaml .Values.dataCoordinator.resources | nindent 10 }}
         volumeMounts:
