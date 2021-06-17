@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "milvus-ha.root-coordinator.fullname" . }}
+  name: {{ template "milvus-ha.rootcoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
 {{- if .Values.rootCoordinator.service.labels }}
 {{ toYaml .Values.rootCoordinator.service.labels | indent 4 }}
 {{- end }}
-    component: "root-coordinator"
+    component: "rootcoord"
 {{- with .Values.rootCoordinator.service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
@@ -31,5 +31,5 @@ spec:
     {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}
-    component: "root-coordinator"
+    component: "rootcoord"
 {{- end }}

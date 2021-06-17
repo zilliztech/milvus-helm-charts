@@ -54,10 +54,10 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.data-coordinator.fullname" . }}
+  name: {{ template "milvus-ha.datacoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "data-coordinator"
+    component: "datacoord"
 spec:
   endpoints:
     - honorLabels: true
@@ -67,7 +67,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: data-coordinator
+      component: datacoord
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance
@@ -104,10 +104,10 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.index-coordinator.fullname" . }}
+  name: {{ template "milvus-ha.indexcoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "index-coordinator"
+    component: "indexcoord"
 spec:
   endpoints:
     - honorLabels: true
@@ -117,7 +117,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: index-coordinator
+      component: indexcoord
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance
@@ -129,10 +129,10 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.root-coordinator.fullname" . }}
+  name: {{ template "milvus-ha.rootcoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "root-coordinator"
+    component: "rootcoord"
 spec:
   endpoints:
     - honorLabels: true
@@ -142,7 +142,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: root-coordinator
+      component: rootcoord
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance
@@ -204,10 +204,10 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.query-coordinator.fullname" . }}
+  name: {{ template "milvus-ha.querycoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "query-coordinator"
+    component: "querycoord"
 spec:
   endpoints:
     - honorLabels: true
@@ -217,7 +217,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: query-coordinator
+      component: querycoord
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance

@@ -36,8 +36,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Create a default fully qualified Root Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.root-coordinator.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-root-coordinator
+{{- define "milvus-ha.rootcoord.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-rootcoord
 {{- end -}}
 
 {{/*
@@ -52,8 +52,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Create a default fully qualified Query Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.query-coordinator.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-query-coordinator
+{{- define "milvus-ha.querycoord.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-querycoord
 {{- end -}}
 
 {{/*
@@ -68,8 +68,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Create a default fully qualified Index Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.index-coordinator.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-index-coordinator
+{{- define "milvus-ha.indexcoord.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-indexcoord
 {{- end -}}
 
 {{/*
@@ -84,8 +84,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 Create a default fully qualified Data Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.data-coordinator.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-data-coordinator
+{{- define "milvus-ha.datacoord.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-datacoord
 {{- end -}}
 
 {{/*

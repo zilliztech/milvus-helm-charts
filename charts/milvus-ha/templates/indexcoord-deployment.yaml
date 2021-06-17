@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus-ha.index-coordinator.fullname" . }}
+  name: {{ template "milvus-ha.indexcoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "index-coordinator"
+    component: "indexcoord"
 spec:
   replicas: {{ .Values.indexCoordinator.replicas }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: "index-coordinator"
+      component: "indexcoord"
   template:
     metadata:
       labels:
 {{ include "milvus-ha.matchLabels" . | indent 8 }}
-        component: "index-coordinator"
+        component: "indexcoord"
     spec:
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
@@ -25,7 +25,7 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-      - name: index-coordinator
+      - name: indexcoord
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus/bin/milvus", "run", "indexservice" ]

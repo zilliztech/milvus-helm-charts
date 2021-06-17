@@ -65,7 +65,7 @@ pulsar:
 
 master:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.root-coordinator.fullname" . }}
+  address: {{ template "milvus-ha.rootcoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
@@ -76,7 +76,7 @@ proxyNode:
 
 queryService:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.query-coordinator.fullname" . }}
+  address: {{ template "milvus-ha.querycoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
@@ -88,7 +88,7 @@ queryNode:
 
 indexService:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.index-coordinator.fullname" . }}
+  address: {{ template "milvus-ha.indexcoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
@@ -99,7 +99,7 @@ indexNode:
 
 dataService:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.data-coordinator.fullname" . }}
+  address: {{ template "milvus-ha.datacoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}

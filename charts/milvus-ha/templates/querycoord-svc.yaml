@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "milvus-ha.query-coordinator.fullname" . }}
+  name: {{ template "milvus-ha.querycoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
 {{- if .Values.queryCoordinator.service.labels }}
 {{ toYaml .Values.queryCoordinator.service.labels | indent 4 }}
 {{- end }}
-    component: "query-coordinator"
+    component: "querycoord"
 {{- with .Values.queryCoordinator.service.annotations }}
   annotations:
 {{ toYaml . | indent 4 }}
@@ -31,5 +31,5 @@ spec:
     {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}
-    component: "query-coordinator"
+    component: "querycoord"
 {{- end }}
