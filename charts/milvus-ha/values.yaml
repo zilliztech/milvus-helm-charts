@@ -10,6 +10,30 @@ image:
     # pullSecrets:
     #   - myRegistryKeySecretName
 
+## Expose the Milvus service to be accessed from outside the cluster (LoadBalancer service).
+## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
+## ref: http://kubernetes.io/docs/user-guide/services/
+##
+service:
+  type: ClusterIP
+  port: 19530
+  nodePort: ""
+  annotations: {}
+  labels: {}
+
+  ## List of IP addresses at which the Milvus service is available
+  ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+  ##
+  externalIPs: []
+  #   - externalIp1
+
+  # LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
+  # set allowed inbound rules on the security group assigned to the master load balancer
+  loadBalancerSourceRanges:
+  - 0.0.0.0/0
+  # Optionally assign a known public LB IP
+  # loadBalancerIP: 1.2.3.4
+
 standalone:
   enabled: true
   replicas: 1
@@ -19,30 +43,6 @@ standalone:
   tolerations: []
   extraEnv: []
 
-  ## Expose the Milvus proxy service to be accessed from outside the cluster (LoadBalancer service).
-  ## or access it from within the cluster (ClusterIP service). Set the service type and the port to serve it.
-  ## ref: http://kubernetes.io/docs/user-guide/services/
-  ##
-  service:
-    type: ClusterIP
-    port: 19530
-    nodePort: ""
-    annotations: {}
-    labels: {}
-
-    ## List of IP addresses at which the Milvus proxy service is available
-    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
-    ##
-    externalIPs: []
-    #   - externalIp1
-
-    # LoadBalancerSourcesRange is a list of allowed CIDR values, which are combined with ServicePort to
-    # set allowed inbound rules on the security group assigned to the master load balancer
-    loadBalancerSourceRanges:
-    - 0.0.0.0/0
-    # Optionally assign a known public LB IP
-    # loadBalancerIP: 1.2.3.4
-
 proxy:
   enabled: true
   replicas: 1
@@ -51,21 +51,6 @@ proxy:
   affinity: {}
   tolerations: []
   extraEnv: []
-
-  service:
-    type: ClusterIP
-    port: 19530
-    nodePort: ""
-    annotations: {}
-    labels: {}
-
-    externalIPs: []
-    #   - externalIp1
-
-    loadBalancerSourceRanges:
-    - 0.0.0.0/0
-    # Optionally assign a known public LB IP
-    # loadBalancerIP: 1.2.3.4
 
 rootCoordinator:
   enabled: true
@@ -176,8 +161,12 @@ pulsarStandalone:
 metrics:
   enabled: true
 
-servicemonitor:
-  enabled: false
+  serviceMonitor:
+    # Set this to `true` to create ServiceMonitor for Prometheus operator
+    enabled: false
+
+    # Additional labels that can be used so ServiceMonitor will be discovered by Prometheus
+    additionalLabels: {}
 
 log:
   level: "debug"
