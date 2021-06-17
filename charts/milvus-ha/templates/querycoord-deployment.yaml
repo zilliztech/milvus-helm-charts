@@ -34,9 +34,14 @@ spec:
           {{- toYaml .Values.queryCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: query
+          - name: querycoord
             containerPort: 19531
             protocol: TCP
+          {{- if .Values.metrics.enabled }}
+          - name: metrics
+            containerPort: 9091
+            protocol: TCP
+          {{- end }}
         resources:
           {{- toYaml .Values.queryCoordinator.resources | nindent 10 }}
         volumeMounts:

@@ -19,15 +19,15 @@ spec:
   clusterIP: {{ .Values.rootCoordinator.service.clusterIP }}
   {{- end }}
   ports:
-    - name: root
+    - name: rootcoord
       port: {{ .Values.rootCoordinator.service.port }}
       protocol: TCP
-      targetPort: root
+      targetPort: rootcoord
     {{- if .Values.metrics.enabled }}
     - name: metrics
       protocol: TCP
       port: 9091
-      targetPort: 9091
+      targetPort: metrics
     {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}

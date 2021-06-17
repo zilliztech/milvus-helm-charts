@@ -1,4 +1,4 @@
-{{- if .Values.servicemonitor.enabled }}
+{{- if and .Values.metrics.enabled .Values.metrics.serviceMonitor.enabled }}
 
 {{- if .Values.standalone.enabled }}
 apiVersion: monitoring.coreos.com/v1
@@ -7,6 +7,9 @@ metadata:
   name: {{ template "milvus-ha.standalone.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
+    {{- if .Values.metrics.serviceMonitor.additionalLabels }}
+{{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
+    {{- end }}
     component: "standalone"
 spec:
   endpoints:
@@ -14,6 +17,9 @@ spec:
       interval: 60s
       path: /metrics
       port: metrics
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
@@ -32,6 +38,9 @@ metadata:
   name: {{ template "milvus-ha.datanode.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
+    {{- if .Values.metrics.serviceMonitor.additionalLabels }}
+{{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
+    {{- end }}
     component: "datanode"
 spec:
   endpoints:
@@ -39,6 +48,9 @@ spec:
       interval: 60s
       path: /metrics
       port: metrics
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
@@ -57,6 +69,9 @@ metadata:
   name: {{ template "milvus-ha.datacoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
+    {{- if .Values.metrics.serviceMonitor.additionalLabels }}
+{{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
+    {{- end }}
     component: "datacoord"
 spec:
   endpoints:
@@ -64,6 +79,9 @@ spec:
       interval: 60s
       path: /metrics
       port: metrics
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
@@ -82,6 +100,9 @@ metadata:
   name: {{ template "milvus-ha.indexnode.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
+    {{- if .Values.metrics.serviceMonitor.additionalLabels }}
+{{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
+    {{- end }}
     component: "indexnode"
 spec:
   endpoints:
@@ -89,6 +110,9 @@ spec:
       interval: 60s
       path: /metrics
       port: metrics
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
@@ -107,6 +131,9 @@ metadata:
   name: {{ template "milvus-ha.indexcoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
+    {{- if .Values.metrics.serviceMonitor.additionalLabels }}
+{{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
+    {{- end }}
     component: "indexcoord"
 spec:
   endpoints:
@@ -114,6 +141,9 @@ spec:
       interval: 60s
       path: /metrics
       port: metrics
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
@@ -132,6 +162,9 @@ metadata:
   name: {{ template "milvus-ha.rootcoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
+    {{- if .Values.metrics.serviceMonitor.additionalLabels }}
+{{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
+    {{- end }}
     component: "rootcoord"
 spec:
   endpoints:
@@ -139,6 +172,9 @@ spec:
       interval: 60s
       path: /metrics
       port: metrics
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
@@ -157,6 +193,9 @@ metadata:
   name: {{ template "milvus-ha.proxy.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
+    {{- if .Values.metrics.serviceMonitor.additionalLabels }}
+{{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
+    {{- end }}
     component: "proxy"
 spec:
   endpoints:
@@ -164,6 +203,9 @@ spec:
       interval: 60s
       path: /metrics
       port: metrics
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
@@ -182,6 +224,9 @@ metadata:
   name: {{ template "milvus-ha.querynode.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
+    {{- if .Values.metrics.serviceMonitor.additionalLabels }}
+{{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
+    {{- end }}
     component: "querynode"
 spec:
   endpoints:
@@ -189,6 +234,9 @@ spec:
       interval: 60s
       path: /metrics
       port: metrics
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
@@ -207,6 +255,9 @@ metadata:
   name: {{ template "milvus-ha.querycoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
+    {{- if .Values.metrics.serviceMonitor.additionalLabels }}
+{{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
+    {{- end }}
     component: "querycoord"
 spec:
   endpoints:
@@ -214,6 +265,9 @@ spec:
       interval: 60s
       path: /metrics
       port: metrics
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}

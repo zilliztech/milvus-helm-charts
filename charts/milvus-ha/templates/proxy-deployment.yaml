@@ -37,6 +37,11 @@ spec:
           - name: proxy
             containerPort: 19530
             protocol: TCP
+          {{- if .Values.metrics.enabled }}
+          - name: metrics
+            containerPort: 9091
+            protocol: TCP
+          {{- end }}
         resources:
           {{- toYaml .Values.proxy.resources | nindent 10 }}
         volumeMounts:

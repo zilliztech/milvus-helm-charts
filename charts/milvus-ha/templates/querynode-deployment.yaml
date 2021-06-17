@@ -40,6 +40,11 @@ spec:
           - name: querynode
             containerPort: 21123
             protocol: TCP
+          {{- if .Values.metrics.enabled }}
+          - name: metrics
+            containerPort: 9091
+            protocol: TCP
+          {{- end }}
         resources:
           {{- toYaml .Values.querynode.resources | nindent 10 }}
         volumeMounts:

@@ -34,9 +34,14 @@ spec:
           {{- toYaml .Values.indexCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: index
+          - name: indexcoord
             containerPort: 31000
             protocol: TCP
+          {{- if .Values.metrics.enabled }}
+          - name: metrics
+            containerPort: 9091
+            protocol: TCP
+          {{- end }}
         resources:
           {{- toYaml .Values.indexCoordinator.resources | nindent 10 }}
         volumeMounts:

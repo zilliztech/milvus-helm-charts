@@ -19,15 +19,15 @@ spec:
   clusterIP: {{ .Values.dataCoordinator.service.clusterIP }}
   {{- end }}
   ports:
-    - name: data
+    - name: datacoord
       port: {{ .Values.dataCoordinator.service.port }}
       protocol: TCP
-      targetPort: data
+      targetPort: datacoord
     {{- if .Values.metrics.enabled }}
     - name: metrics
       protocol: TCP
       port: 9091
-      targetPort: 9091
+      targetPort: metrics
     {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}

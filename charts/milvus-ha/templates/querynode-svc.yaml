@@ -14,7 +14,7 @@ spec:
     - name: metrics
       protocol: TCP
       port: 9091
-      targetPort: 9091
+      targetPort: metrics
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}
     component: "querynode"
