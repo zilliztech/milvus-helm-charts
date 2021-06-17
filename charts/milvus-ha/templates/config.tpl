@@ -99,11 +99,11 @@ indexNode:
 
 dataService:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.dataservice.fullname" . }}
+  address: {{ template "milvus-ha.data-coordinator.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
-  port: {{ .Values.dataservice.service.port }}
+  port: {{ .Values.dataCoordinator.service.port }}
 
 dataNode:
   port: 21124

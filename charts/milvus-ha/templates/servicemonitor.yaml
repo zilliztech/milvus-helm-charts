@@ -50,14 +50,14 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.dataservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.dataCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.dataservice.fullname" . }}
+  name: {{ template "milvus-ha.data-coordinator.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "dataservice"
+    component: "data-coordinator"
 spec:
   endpoints:
     - honorLabels: true
@@ -67,7 +67,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: dataservice
+      component: data-coordinator
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance
