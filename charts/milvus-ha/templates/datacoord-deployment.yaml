@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus-ha.data-coordinator.fullname" . }}
+  name: {{ template "milvus-ha.datacoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "data-coordinator"
+    component: "datacoord"
 spec:
   replicas: {{ .Values.dataCoordinator.replicas }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: "data-coordinator"
+      component: "datacoord"
   template:
     metadata:
       labels:
 {{ include "milvus-ha.matchLabels" . | indent 8 }}
-        component: "data-coordinator"
+        component: "datacoord"
     spec:
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
@@ -25,7 +25,7 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-      - name: data-coordinator
+      - name: datacoord
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus/bin/milvus", "run", "dataservice" ]
