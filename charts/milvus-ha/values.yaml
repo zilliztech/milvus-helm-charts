@@ -43,7 +43,7 @@ standalone:
     # Optionally assign a known public LB IP
     # loadBalancerIP: 1.2.3.4
 
-proxynode:
+proxy:
   enabled: true
   replicas: 1
   resources: {}
