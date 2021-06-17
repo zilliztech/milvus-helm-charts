@@ -33,19 +33,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Create a default fully qualified master name.
+Create a default fully qualified Root Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.master.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-master
-{{- end -}}
-
-{{/*
-Create a default fully qualified proxyservice name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "milvus-ha.proxyservice.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-proxyservice
+{{- define "milvus-ha.rootcoord.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-rootcoord
 {{- end -}}
 
 {{/*
@@ -57,11 +49,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Create a default fully qualified queryservice name.
+Create a default fully qualified Query Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.queryservice.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-queryservice
+{{- define "milvus-ha.querycoord.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-querycoord
 {{- end -}}
 
 {{/*
@@ -73,11 +65,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Create a default fully qualified indexservice name.
+Create a default fully qualified Index Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.indexservice.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-indexservice
+{{- define "milvus-ha.indexcoord.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-indexcoord
 {{- end -}}
 
 {{/*
@@ -89,11 +81,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Create a default fully qualified dataservice name.
+Create a default fully qualified Data Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.dataservice.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-dataservice
+{{- define "milvus-ha.datacoord.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-datacoord
 {{- end -}}
 
 {{/*

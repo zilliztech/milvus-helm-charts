@@ -50,14 +50,14 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.dataservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.dataCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.dataservice.fullname" . }}
+  name: {{ template "milvus-ha.datacoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "dataservice"
+    component: "datacoord"
 spec:
   endpoints:
     - honorLabels: true
@@ -67,7 +67,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: dataservice
+      component: datacoord
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance
@@ -100,14 +100,14 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.indexservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.indexCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.indexservice.fullname" . }}
+  name: {{ template "milvus-ha.indexcoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "indexservice"
+    component: "indexcoord"
 spec:
   endpoints:
     - honorLabels: true
@@ -117,7 +117,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: indexservice
+      component: indexcoord
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance
@@ -125,14 +125,14 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.master.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.rootCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.master.fullname" . }}
+  name: {{ template "milvus-ha.rootcoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "master"
+    component: "rootcoord"
 spec:
   endpoints:
     - honorLabels: true
@@ -142,7 +142,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: master
+      component: rootcoord
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance
@@ -175,31 +175,6 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.proxyservice.enabled (not .Values.standalone.enabled) }}
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: {{ template "milvus-ha.proxyservice.fullname" . }}
-  labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
-    component: "proxyservice"
-spec:
-  endpoints:
-    - honorLabels: true
-      interval: 60s
-      path: /metrics
-      port: metrics
-  selector:
-    matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: proxyservice
-  targetLabels:
-    - app.kubernetes.io/name
-    - app.kubernetes.io/instance
-    - component
-{{- end }}
-
----
 {{- if and .Values.querynode.enabled (not .Values.standalone.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -225,14 +200,14 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.queryservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.queryCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.queryservice.fullname" . }}
+  name: {{ template "milvus-ha.querycoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "queryservice"
+    component: "querycoord"
 spec:
   endpoints:
     - honorLabels: true
@@ -242,7 +217,7 @@ spec:
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: queryservice
+      component: querycoord
   targetLabels:
     - app.kubernetes.io/name
     - app.kubernetes.io/instance

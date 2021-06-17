@@ -1,22 +1,22 @@
-{{- if and .Values.queryservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.rootCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus-ha.queryservice.fullname" . }}
+  name: {{ template "milvus-ha.rootcoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "queryservice"
+    component: "rootcoord"
 spec:
-  replicas: {{ .Values.queryservice.replicas }}
+  replicas: {{ .Values.rootCoordinator.replicas }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: "queryservice"
+      component: "rootcoord"
   template:
     metadata:
       labels:
 {{ include "milvus-ha.matchLabels" . | indent 8 }}
-        component: "queryservice"
+        component: "rootcoord"
     spec:
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
@@ -25,20 +25,20 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-      - name: queryservice
+      - name: rootcoord
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus/bin/milvus", "run", "queryservice" ]
-        {{- if .Values.queryservice.extraEnv }}
+        args: [ "/milvus/bin/milvus", "run", "master" ]
+        {{- if .Values.rootCoordinator.extraEnv }}
         env:
-          {{- toYaml .Values.queryservice.extraEnv | nindent 10 }}
+          {{- toYaml .Values.rootCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: queryservice
-            containerPort: 19531
+          - name: root
+            containerPort: 53100
             protocol: TCP
         resources:
-          {{- toYaml .Values.queryservice.resources | nindent 10 }}
+          {{- toYaml .Values.rootCoordinator.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-ha-config
           mountPath: /milvus/configs/milvus.yaml
@@ -48,15 +48,15 @@ spec:
           mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
 
-      {{- with .Values.queryservice.nodeSelector }}
+      {{- with .Values.rootCoordinator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.queryservice.affinity }}
+      {{- with .Values.rootCoordinator.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.queryservice.tolerations }}
+      {{- with .Values.rootCoordinator.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

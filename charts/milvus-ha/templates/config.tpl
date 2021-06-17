@@ -10,70 +10,77 @@
 # is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 # or implied. See the License for the specific language governing permissions and limitations under the License.
 
-
-nodeID: # will be deprecated after v0.2
-  proxyIDList: [0]
+nodeID: # will be deprecated later
   queryNodeIDList: [1]
-  dataNodeIDList: [2]
 
 etcd:
-  address: {{ .Release.Name }}-{{ .Values.etcd.name }}
-  port: {{ .Values.etcd.service.port }}
+{{- if .Values.externalEtcd.enabled }}
+  endpoints:
+  {{- range .Values.externalEtcd.endpoints }}
+    - {{ . }}
+  {{- end }}
+{{- else }}
+  endpoints:
+    - {{ .Release.Name }}-{{ .Values.etcd.name }}:{{ .Values.etcd.service.port }}
+{{- end }}
   rootPath: by-dev
   metaSubPath: meta # metaRootPath = rootPath + '/' + metaSubPath
   kvSubPath: kv # kvRootPath = rootPath + '/' + kvSubPath
-  segFlushMetaSubPath: writer/segment
-  ddlFlushMetaSubPath: writer/ddl
-  writeNodeSegKvSubPath: writer/segment # GOOSE TODO: remove this
-  writeNodeDDLKvSubPath: writer/ddl # GOOSE TODO: remove this
-  segThreshold: 10000
 
 minio:
+{{- if .Values.externalMinio.enabled }}
+  address: {{ .Values.externalMinio.address }}
+  port: {{ .Values.externalMinio.port }}
+  accessKeyID: {{ .Values.externalMinio.accessKey }}
+  secretAccessKey: {{ .Values.externalMinio.secretKey }}
+{{- else }}
   address: {{ .Release.Name }}-{{ .Values.minio.name }}
   port: {{ .Values.minio.service.port }}
   accessKeyID: {{ .Values.minio.accessKey }}
   secretAccessKey: {{ .Values.minio.secretKey }}
+{{- end }}
   useSSL: false
   bucketName: "a-bucket"
 
 pulsar:
-{{- if .Values.pulsar.enabled }}
+{{- if .Values.externalPulsar.enabled }}
+  address: {{ .Values.externalPulsar.address }}
+  port: {{ .Values.externalPulsar.port }}
+{{- else if .Values.pulsar.enabled }}
   address: {{ .Release.Name }}-{{ .Values.pulsar.name }}-proxy
-  port: 6650
+  {{- $httpPort := "" -}}
+  {{- $httpsPort := "" -}}
+  {{- range .Values.pulsar.proxy.service.ports }}
+  {{- if eq .name "pulsar" }}
+  {{- $httpPort = .port -}}
+  {{- else if eq .name "pulsarssl" }}
+  {{- $httpsPort = .port -}}
+  {{- end }}
+  {{- end }}
+  port: {{ $httpsPort | default $httpPort }}
 {{- else }}
   address: {{ template "milvus-ha.pulsar.fullname" . }}
   port: {{ .Values.pulsarStandalone.service.port }}
 {{- end }}
-  authentication: false
-  user: user-default
-  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb2UifQ.ipevRNuRP6HflG8cFKnmUPtypruRC4fb1DWtoLL62SY
 
 master:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.master.fullname" . }}
+  address: {{ template "milvus-ha.rootcoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
-  port: {{ .Values.master.service.port }}
-
-proxyService:
-{{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.proxyservice.fullname" . }}
-{{- else }}
-  address: localhost
-{{- end }}
-  port: {{ .Values.proxyservice.service.port }}
+  port: {{ .Values.rootCoordinator.service.port }}
 
 proxyNode:
   port: 19530
 
 queryService:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.queryservice.fullname" . }}
+  address: {{ template "milvus-ha.querycoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
-  port: {{ .Values.queryservice.service.port }}
+  port: {{ .Values.queryCoordinator.service.port }}
 
 queryNode:
   gracefulTime: 5000 #ms
@@ -81,22 +88,22 @@ queryNode:
 
 indexService:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.indexservice.fullname" . }}
+  address: {{ template "milvus-ha.indexcoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
-  port: {{ .Values.indexservice.service.port }}
+  port: {{ .Values.indexCoordinator.service.port }}
 
 indexNode:
   port: 21121
 
 dataService:
 {{- if not .Values.standalone.enabled }}
-  address: {{ template "milvus-ha.dataservice.fullname" . }}
+  address: {{ template "milvus-ha.datacoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
-  port: {{ .Values.dataservice.service.port }}
+  port: {{ .Values.dataCoordinator.service.port }}
 
 dataNode:
   port: 21124

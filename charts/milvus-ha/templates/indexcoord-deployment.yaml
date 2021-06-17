@@ -1,22 +1,22 @@
-{{- if and .Values.proxyservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.indexCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus-ha.proxyservice.fullname" . }}
+  name: {{ template "milvus-ha.indexcoord.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "proxyservice"
+    component: "indexcoord"
 spec:
-  replicas: {{ .Values.proxyservice.replicas }}
+  replicas: {{ .Values.indexCoordinator.replicas }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: "proxyservice"
+      component: "indexcoord"
   template:
     metadata:
       labels:
 {{ include "milvus-ha.matchLabels" . | indent 8 }}
-        component: "proxyservice"
+        component: "indexcoord"
     spec:
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
@@ -25,20 +25,20 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-      - name: proxyservice
+      - name: indexcoord
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus/bin/milvus", "run", "proxyservice" ]
-        {{- if .Values.proxyservice.extraEnv }}
+        args: [ "/milvus/bin/milvus", "run", "indexservice" ]
+        {{- if .Values.indexCoordinator.extraEnv }}
         env:
-          {{- toYaml .Values.proxyservice.extraEnv | nindent 10 }}
+          {{- toYaml .Values.indexCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: proxyservice
-            containerPort: 21122
+          - name: index
+            containerPort: 31000
             protocol: TCP
         resources:
-          {{- toYaml .Values.proxyservice.resources | nindent 10 }}
+          {{- toYaml .Values.indexCoordinator.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-ha-config
           mountPath: /milvus/configs/milvus.yaml
@@ -48,15 +48,15 @@ spec:
           mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
 
-      {{- with .Values.proxyservice.nodeSelector }}
+      {{- with .Values.indexCoordinator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.proxyservice.affinity }}
+      {{- with .Values.indexCoordinator.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.proxyservice.tolerations }}
+      {{- with .Values.indexCoordinator.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

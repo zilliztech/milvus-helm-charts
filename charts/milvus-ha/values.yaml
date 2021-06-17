@@ -43,30 +43,6 @@ standalone:
     # Optionally assign a known public LB IP
     # loadBalancerIP: 1.2.3.4
 
-proxyservice:
-  enabled: true
-  replicas: 1
-  resources: {}
-  nodeSelector: {}
-  affinity: {}
-  tolerations: []
-  extraEnv: []
-
-  service:
-    type: ClusterIP
-    port: 21122
-    nodePort: ""
-    annotations: {}
-    labels: {}
-
-    externalIPs: []
-    #   - externalIp1
-
-    loadBalancerSourceRanges:
-    - 0.0.0.0/0
-    # Optionally assign a known public LB IP
-    # loadBalancerIP: 1.2.3.4
-
 proxynode:
   enabled: true
   replicas: 1
@@ -91,7 +67,7 @@ proxynode:
     # Optionally assign a known public LB IP
     # loadBalancerIP: 1.2.3.4
 
-master:
+rootCoordinator:
   enabled: true
   replicas: 1
   resources: {}
@@ -106,7 +82,7 @@ master:
     labels: {}
     clusterIP: ""
 
-queryservice:
+queryCoordinator:
   enabled: true
   replicas: 1
   resources: {}
@@ -130,7 +106,7 @@ querynode:
   tolerations: []
   extraEnv: []
 
-indexservice:
+indexCoordinator:
   enabled: true
   replicas: 1
   resources: {}
@@ -154,7 +130,7 @@ indexnode:
   tolerations: []
   extraEnv: []
 
-dataservice:
+dataCoordinator:
   enabled: true
   replicas: 1
   resources: {}
@@ -196,6 +172,12 @@ pulsarStandalone:
     annotations: {}
     labels: {}
     clusterIP: ""
+
+metrics:
+  enabled: true
+
+servicemonitor:
+  enabled: false
 
 log:
   level: "debug"
@@ -345,8 +327,34 @@ pulsar:
       PULSAR_MEM: "\"-Xms512m -Xmx512m -XX:MaxDirectMemorySize=512m\""
 
 
-metrics:
-  enabled: true
-
-servicemonitor:
+###################################
+# External minio
+# - these configs are only used when `externalMinio.enabled` is true
+###################################
+externalMinio:
   enabled: false
+  address: localhost
+  port: 9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+
+###################################
+# External etcd
+# - these configs are only used when `externalEtcd.enabled` is true
+###################################
+externalEtcd:
+  enabled: false
+  ## the endpoints of the external etcd
+  ##
+  endpoints:
+    - localhost:2379
+
+###################################
+# External pulsar
+# - these configs are only used when `externalPulsar.enabled` is true
+###################################
+externalPulsar:
+  enabled: false
+  address: localhost
+  port: 6650
+  

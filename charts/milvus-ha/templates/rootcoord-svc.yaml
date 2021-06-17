@@ -1,0 +1,35 @@
+{{- if and .Values.rootCoordinator.enabled (not .Values.standalone.enabled) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "milvus-ha.rootcoord.fullname" . }}
+  labels:
+{{ include "milvus-ha.labels" . | indent 4 }}
+{{- if .Values.rootCoordinator.service.labels }}
+{{ toYaml .Values.rootCoordinator.service.labels | indent 4 }}
+{{- end }}
+    component: "rootcoord"
+{{- with .Values.rootCoordinator.service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  type: ClusterIP
+  {{- if .Values.rootCoordinator.service.clusterIP }}
+  clusterIP: {{ .Values.rootCoordinator.service.clusterIP }}
+  {{- end }}
+  ports:
+    - name: root
+      port: {{ .Values.rootCoordinator.service.port }}
+      protocol: TCP
+      targetPort: root
+    {{- if .Values.metrics.enabled }}
+    - name: metrics
+      protocol: TCP
+      port: 9091
+      targetPort: 9091
+    {{- end }}
+  selector:
+{{ include "milvus-ha.matchLabels" . | indent 4 }}
+    component: "rootcoord"
+{{- end }}
