@@ -1,22 +1,22 @@
-{{- if and .Values.dataservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.dataCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus-ha.dataservice.fullname" . }}
+  name: {{ template "milvus-ha.data-coordinator.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "dataservice"
+    component: "data-coordinator"
 spec:
-  replicas: {{ .Values.dataservice.replicas }}
+  replicas: {{ .Values.dataCoordinator.replicas }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: "dataservice"
+      component: "data-coordinator"
   template:
     metadata:
       labels:
 {{ include "milvus-ha.matchLabels" . | indent 8 }}
-        component: "dataservice"
+        component: "data-coordinator"
     spec:
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
@@ -25,20 +25,20 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-      - name: dataservice
+      - name: data-coordinator
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus/bin/milvus", "run", "dataservice" ]
-        {{- if .Values.dataservice.extraEnv }}
+        {{- if .Values.dataCoordinator.extraEnv }}
         env:
-          {{- toYaml .Values.dataservice.extraEnv | nindent 10 }}
+          {{- toYaml .Values.dataCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: dataservice
+          - name: data
             containerPort: 13333
             protocol: TCP
         resources:
-          {{- toYaml .Values.dataservice.resources | nindent 10 }}
+          {{- toYaml .Values.dataCoordinator.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-ha-config
           mountPath: /milvus/configs/milvus.yaml
@@ -48,15 +48,15 @@ spec:
           mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
 
-      {{- with .Values.dataservice.nodeSelector }}
+      {{- with .Values.dataCoordinator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.dataservice.affinity }}
+      {{- with .Values.dataCoordinator.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.dataservice.tolerations }}
+      {{- with .Values.dataCoordinator.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

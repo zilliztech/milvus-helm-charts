@@ -130,7 +130,7 @@ indexnode:
   tolerations: []
   extraEnv: []
 
-dataservice:
+dataCoordinator:
   enabled: true
   replicas: 1
   resources: {}
