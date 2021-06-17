@@ -49,11 +49,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Create a default fully qualified queryservice name.
+Create a default fully qualified Query Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.queryservice.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-queryservice
+{{- define "milvus-ha.query-coordinator.fullname" -}}
+{{ template "milvus-ha.fullname" . }}-query-coordinator
 {{- end -}}
 
 {{/*

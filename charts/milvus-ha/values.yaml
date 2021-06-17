@@ -82,7 +82,7 @@ rootCoordinator:
     labels: {}
     clusterIP: ""
 
-queryservice:
+queryCoordinator:
   enabled: true
   replicas: 1
   resources: {}

@@ -1,22 +1,22 @@
-{{- if and .Values.queryservice.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.queryCoordinator.enabled (not .Values.standalone.enabled) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus-ha.queryservice.fullname" . }}
+  name: {{ template "milvus-ha.query-coordinator.fullname" . }}
   labels:
 {{ include "milvus-ha.labels" . | indent 4 }}
-    component: "queryservice"
+    component: "query-coordinator"
 spec:
-  replicas: {{ .Values.queryservice.replicas }}
+  replicas: {{ .Values.queryCoordinator.replicas }}
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}
-      component: "queryservice"
+      component: "query-coordinator"
   template:
     metadata:
       labels:
 {{ include "milvus-ha.matchLabels" . | indent 8 }}
-        component: "queryservice"
+        component: "query-coordinator"
     spec:
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
@@ -25,20 +25,20 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-      - name: queryservice
+      - name: query-coordinator
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
         args: [ "/milvus/bin/milvus", "run", "queryservice" ]
-        {{- if .Values.queryservice.extraEnv }}
+        {{- if .Values.queryCoordinator.extraEnv }}
         env:
-          {{- toYaml .Values.queryservice.extraEnv | nindent 10 }}
+          {{- toYaml .Values.queryCoordinator.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: queryservice
+          - name: query
             containerPort: 19531
             protocol: TCP
         resources:
-          {{- toYaml .Values.queryservice.resources | nindent 10 }}
+          {{- toYaml .Values.queryCoordinator.resources | nindent 10 }}
         volumeMounts:
         - name: milvus-ha-config
           mountPath: /milvus/configs/milvus.yaml
@@ -48,15 +48,15 @@ spec:
           mountPath: {{ .Values.logsPersistence.mountPath | quote }}
           subPath: {{ .Values.logsPersistence.persistentVolumeClaim.subPath | default "" }}
 
-      {{- with .Values.queryservice.nodeSelector }}
+      {{- with .Values.queryCoordinator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.queryservice.affinity }}
+      {{- with .Values.queryCoordinator.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.queryservice.tolerations }}
+      {{- with .Values.queryCoordinator.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
