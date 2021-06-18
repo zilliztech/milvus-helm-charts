@@ -34,7 +34,7 @@ spec:
           {{- toYaml .Values.proxy.extraEnv | nindent 10 }}
         {{- end }}
         ports:
-          - name: proxy
+          - name: milvus
             containerPort: 19530
             protocol: TCP
           {{- if .Values.metrics.enabled }}
