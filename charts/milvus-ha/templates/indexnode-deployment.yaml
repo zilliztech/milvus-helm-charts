@@ -17,6 +17,8 @@ spec:
       labels:
 {{ include "milvus-ha.matchLabels" . | indent 8 }}
         component: "indexnode"
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       {{- if .Values.image.all.pullSecrets }}
       imagePullSecrets:
