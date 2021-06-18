@@ -28,7 +28,7 @@ spec:
       - name: querycoord
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus/bin/milvus", "run", "queryservice" ]
+        args: [ "/milvus/bin/milvus", "run", "querycoord" ]
         {{- if .Values.queryCoordinator.extraEnv }}
         env:
           {{- toYaml .Values.queryCoordinator.extraEnv | nindent 10 }}
