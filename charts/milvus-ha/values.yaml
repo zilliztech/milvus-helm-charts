@@ -49,7 +49,7 @@ ingress:
 
 standalone:
   enabled: true
-  replicas: 1
+  replicas: 1  # Run standalone mode with replication disabled
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -67,7 +67,7 @@ proxy:
 
 rootCoordinator:
   enabled: true
-  replicas: 1
+  replicas: 1  # Run Root Coordinator mode with replication disabled
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -82,7 +82,7 @@ rootCoordinator:
 
 queryCoordinator:
   enabled: true
-  replicas: 1
+  replicas: 1  # Run Query Coordinator mode with replication disabled
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -106,7 +106,7 @@ querynode:
 
 indexCoordinator:
   enabled: true
-  replicas: 1
+  replicas: 1   # Run Index Coordinator mode with replication disabled
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -130,7 +130,7 @@ indexnode:
 
 dataCoordinator:
   enabled: true
-  replicas: 1
+  replicas: 1  # Run Data Coordinator mode with replication disabled
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -330,12 +330,12 @@ pulsar:
 
 
 ###################################
-# External minio
-# - these configs are only used when `externalMinio.enabled` is true
+# External S3
+# - these configs are only used when `externalS3.enabled` is true
 ###################################
-externalMinio:
+externalS3:
   enabled: false
-  address: localhost
+  host: localhost
   port: 9000
   accessKey: minioadmin
   secretKey: minioadmin
@@ -357,6 +357,6 @@ externalEtcd:
 ###################################
 externalPulsar:
   enabled: false
-  address: localhost
+  host: localhost
   port: 6650
   
