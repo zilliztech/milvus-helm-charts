@@ -30,7 +30,7 @@ spec:
       - name: datacoord
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus/bin/milvus", "run", "datacoord" ]
+        args: [ "milvus", "run", "datacoord" ]
         {{- if .Values.dataCoordinator.extraEnv }}
         env:
           {{- toYaml .Values.dataCoordinator.extraEnv | nindent 10 }}

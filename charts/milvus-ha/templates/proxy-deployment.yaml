@@ -30,7 +30,7 @@ spec:
       - name: proxy
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus/bin/milvus", "run", "proxy" ]
+        args: [ "milvus", "run", "proxy" ]
         {{- if .Values.proxy.extraEnv }}
         env:
           {{- toYaml .Values.proxy.extraEnv | nindent 10 }}
