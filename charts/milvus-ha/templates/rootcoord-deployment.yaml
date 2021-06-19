@@ -30,7 +30,7 @@ spec:
       - name: rootcoord
         image: "{{ .Values.image.all.repository }}:{{ .Values.image.all.tag }}"
         imagePullPolicy: {{ .Values.image.all.pullPolicy }}
-        args: [ "/milvus/bin/milvus", "run", "rootcoord" ]
+        args: [ "milvus", "run", "rootcoord" ]
         {{- if .Values.rootCoordinator.extraEnv }}
         env:
           {{- toYaml .Values.rootCoordinator.extraEnv | nindent 10 }}
