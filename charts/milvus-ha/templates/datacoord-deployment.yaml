@@ -7,7 +7,7 @@ metadata:
 {{ include "milvus-ha.labels" . | indent 4 }}
     component: "datacoord"
 spec:
-  replicas: {{ .Values.dataCoordinator.replicas }}
+  replicas: 1
   selector:
     matchLabels:
 {{ include "milvus-ha.matchLabels" . | indent 6 }}

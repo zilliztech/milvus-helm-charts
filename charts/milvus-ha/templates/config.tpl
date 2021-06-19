@@ -25,11 +25,11 @@ etcd:
   kvSubPath: kv # kvRootPath = rootPath + '/' + kvSubPath
 
 minio:
-{{- if .Values.externalMinio.enabled }}
-  address: {{ .Values.externalMinio.address }}
-  port: {{ .Values.externalMinio.port }}
-  accessKeyID: {{ .Values.externalMinio.accessKey }}
-  secretAccessKey: {{ .Values.externalMinio.secretKey }}
+{{- if .Values.externalS3.enabled }}
+  address: {{ .Values.externalS3.host }}
+  port: {{ .Values.externalS3.port }}
+  accessKeyID: {{ .Values.externalS3.accessKey }}
+  secretAccessKey: {{ .Values.externalS3.secretKey }}
 {{- else }}
   address: {{ .Release.Name }}-{{ .Values.minio.name }}
   port: {{ .Values.minio.service.port }}
@@ -41,7 +41,7 @@ minio:
 
 pulsar:
 {{- if .Values.externalPulsar.enabled }}
-  address: {{ .Values.externalPulsar.address }}
+  address: {{ .Values.externalPulsar.host }}
   port: {{ .Values.externalPulsar.port }}
 {{- else if .Values.pulsar.enabled }}
   address: {{ .Release.Name }}-{{ .Values.pulsar.name }}-proxy
