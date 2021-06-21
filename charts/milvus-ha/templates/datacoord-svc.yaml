@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "milvus-ha.datacoord.fullname" . }}
+  name: {{ template "milvus.datacoord.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
 {{- if .Values.dataCoordinator.service.labels }}
 {{ toYaml .Values.dataCoordinator.service.labels | indent 4 }}
 {{- end }}
@@ -30,6 +30,6 @@ spec:
       targetPort: metrics
     {{- end }}
   selector:
-{{ include "milvus-ha.matchLabels" . | indent 4 }}
+{{ include "milvus.matchLabels" . | indent 4 }}
     component: "datacoord"
 {{- end }}

@@ -3,13 +3,13 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ printf "%s-logs" (include "milvus-ha.fullname" . | trunc 58)}}
+  name: {{ printf "%s-logs" (include "milvus.fullname" . | trunc 58)}}
 {{- with .Values.logsPersistence.annotations  }}
   annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
 spec:
   accessModes:
   - {{ $pvc.accessModes | quote }}

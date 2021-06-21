@@ -1,12 +1,12 @@
 {{- if and .Values.ingress.enabled }}
-{{- $serviceName := include "milvus-ha.fullname" . -}}
+{{- $serviceName := include "milvus.fullname" . -}}
 {{- $servicePort := .Values.service.port -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "milvus-ha.fullname" . }}
+  name: {{ template "milvus.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
 {{- if .Values.ingress.labels }}
 {{ toYaml .Values.ingress.labels | indent 4 }}
 {{- end }}
