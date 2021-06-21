@@ -1,3 +1,7 @@
+## Enable or disable Milvus Cluster mode
+cluster:
+  enabled: false
+
 image:
   all:
     repository: milvusdb/milvus
@@ -48,7 +52,6 @@ ingress:
   #      - milvus-example.local
 
 standalone:
-  enabled: true
   replicas: 1  # Run standalone mode with replication disabled
   resources: {}
   nodeSelector: {}

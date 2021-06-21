@@ -1,6 +1,6 @@
 {{- if and .Values.metrics.enabled .Values.metrics.serviceMonitor.enabled }}
 
-{{- if .Values.standalone.enabled }}
+{{- if not .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -31,7 +31,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.datanode.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.datanode.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -62,7 +62,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.dataCoordinator.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.dataCoordinator.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -93,7 +93,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.indexnode.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.indexnode.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -124,7 +124,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.indexCoordinator.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.indexCoordinator.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -155,7 +155,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.rootCoordinator.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.rootCoordinator.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -186,7 +186,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.proxy.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.proxy.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -217,7 +217,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.querynode.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.querynode.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -248,7 +248,7 @@ spec:
 {{- end }}
 
 ---
-{{- if and .Values.queryCoordinator.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.queryCoordinator.enabled .Values.cluster.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
