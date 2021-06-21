@@ -61,7 +61,7 @@ pulsar:
 {{- end }}
 
 master:
-{{- if not .Values.standalone.enabled }}
+{{- if .Values.cluster.enabled }}
   address: {{ template "milvus-ha.rootcoord.fullname" . }}
 {{- else }}
   address: localhost
@@ -72,7 +72,7 @@ proxyNode:
   port: 19530
 
 queryService:
-{{- if not .Values.standalone.enabled }}
+{{- if .Values.cluster.enabled }}
   address: {{ template "milvus-ha.querycoord.fullname" . }}
 {{- else }}
   address: localhost
@@ -84,7 +84,7 @@ queryNode:
   port: 21123
 
 indexService:
-{{- if not .Values.standalone.enabled }}
+{{- if .Values.cluster.enabled }}
   address: {{ template "milvus-ha.indexcoord.fullname" . }}
 {{- else }}
   address: localhost
@@ -95,7 +95,7 @@ indexNode:
   port: 21121
 
 dataService:
-{{- if not .Values.standalone.enabled }}
+{{- if .Values.cluster.enabled }}
   address: {{ template "milvus-ha.datacoord.fullname" . }}
 {{- else }}
   address: localhost

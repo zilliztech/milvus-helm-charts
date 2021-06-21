@@ -1,4 +1,4 @@
-{{- if and .Values.rootCoordinator.enabled (not .Values.standalone.enabled) }}
+{{- if and .Values.rootCoordinator.enabled .Values.cluster.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

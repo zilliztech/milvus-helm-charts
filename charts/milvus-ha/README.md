@@ -39,7 +39,7 @@ $ helm upgrade --install my-release milvus/milvus
 
 ```bash
 # Helm v3.x
-$ helm upgrade --install --set standalone.enabled=false my-release  .
+$ helm upgrade --install --set cluster.enabled=true my-release  .
 ```
 ## Uninstall the Chart
 
@@ -58,6 +58,7 @@ The following table lists the configurable parameters of the Milvus Service and 
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| `cluster.enabled`                         | Enable or disable Milvus Cluster mode         | `false`                                                 |
 | `image.all.repository`                    | Image repository                              | `milvusdb/milvus`                                       |
 | `image.all.tag`                           | Image tag                                     | `latest`                                                |
 | `image.all.pullPolicy`                    | Image pull policy                             | `IfNotPresent`                                          |
@@ -98,7 +99,6 @@ The following table lists the configurable parameters of the Milvus Standalone c
 
 | Parameter                                 | Description                                   | Default                                                 |
 |-------------------------------------------|-----------------------------------------------|---------------------------------------------------------|
-| `standalone.enabled`                      | Enable or disable Milvus Standalone mode      | `true`                                                  |
 | `standalone.resources`                    | Resource requests/limits for the Milvus Standalone pods | `{}`                                          |
 | `standalone.nodeSelector`                 | Node labels for Milvus Standalone pods assignment | `{}`                                                |
 | `standalone.affinity`                     | Affinity settings for Milvus Standalone pods assignment | `{}`                                          |

@@ -1,4 +1,4 @@
-{{- if or .Values.proxy.enabled .Values.standalone.enabled }}
+{{- if or .Values.proxy.enabled (not .Values.cluster.enabled) }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -8,9 +8,9 @@ metadata:
 {{- if .Values.service.labels }}
 {{ toYaml .Values.service.labels | indent 4 }}
 {{- end }}
-{{- if .Values.standalone.enabled }}
+{{- if not .Values.cluster.enabled }}
     component: "standalone"
-{{- else if and .Values.proxy.enabled (not .Values.standalone.enabled) }}
+{{- else if and .Values.proxy.enabled .Values.cluster.enabled }}
     component: "proxy"
 {{- end }}
 {{- with .Values.service.annotations }}
@@ -51,9 +51,9 @@ spec:
     {{- end }}
   selector:
 {{ include "milvus-ha.matchLabels" . | indent 4 }}
-{{- if .Values.standalone.enabled }}
+{{- if not .Values.cluster.enabled }}
     component: "standalone"
-{{- else if and .Values.proxy.enabled (not .Values.standalone.enabled) }}
+{{- else if and .Values.proxy.enabled .Values.cluster.enabled }}
     component: "proxy"
 {{- end }}
 {{- end }}

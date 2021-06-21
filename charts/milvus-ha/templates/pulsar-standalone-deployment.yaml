@@ -1,4 +1,4 @@
-{{- if and (not .Values.pulsar.enabled) (not .Values.standalone.enabled) }}
+{{- if and (not .Values.pulsar.enabled) .Values.cluster.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
