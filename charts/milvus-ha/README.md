@@ -12,6 +12,8 @@ This chart bootstraps Milvus deployment on a Kubernetes cluster using the Helm p
 - Kubernetes 1.14+
 - Helm >= 3.0.0
 
+> **IMPORTANT** The master branch is for the development of Milvus v2.0. On March 9th, 2021, we released Milvus v1.0, the first stable version of Milvus with long-term support. To use Milvus v1.x, switch to [branch 1.1](https://github.com/milvus-io/milvus-helm/tree/1.1).
+
 ## Installing the Chart
 
 1. Add the stable repository
@@ -39,7 +41,7 @@ $ helm upgrade --install my-release milvus/milvus
 
 ```bash
 # Helm v3.x
-$ helm upgrade --install --set cluster.enabled=true my-release  .
+$ helm upgrade --install --set cluster.enabled=true my-release milvus/milvus
 ```
 ## Uninstall the Chart
 
