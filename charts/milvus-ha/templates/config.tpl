@@ -94,7 +94,7 @@ indexService:
 indexNode:
   port: 21121
 
-dataService:
+dataCoord:
 {{- if .Values.cluster.enabled }}
   address: {{ template "milvus-ha.datacoord.fullname" . }}
 {{- else }}
