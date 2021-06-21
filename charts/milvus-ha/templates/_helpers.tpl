@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "milvus-ha.name" -}}
+{{- define "milvus.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "milvus-ha.fullname" -}}
+{{- define "milvus.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -28,93 +28,93 @@ If release name contains chart name it will be used as a full name.
 Create a default fully qualified standalone name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.standalone.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-standalone
+{{- define "milvus.standalone.fullname" -}}
+{{ template "milvus.fullname" . }}-standalone
 {{- end -}}
 
 {{/*
 Create a default fully qualified Root Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.rootcoord.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-rootcoord
+{{- define "milvus.rootcoord.fullname" -}}
+{{ template "milvus.fullname" . }}-rootcoord
 {{- end -}}
 
 {{/*
 Create a default fully qualified Proxy name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.proxy.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-proxy
+{{- define "milvus.proxy.fullname" -}}
+{{ template "milvus.fullname" . }}-proxy
 {{- end -}}
 
 {{/*
 Create a default fully qualified Query Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.querycoord.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-querycoord
+{{- define "milvus.querycoord.fullname" -}}
+{{ template "milvus.fullname" . }}-querycoord
 {{- end -}}
 
 {{/*
 Create a default fully qualified querynode name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.querynode.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-querynode
+{{- define "milvus.querynode.fullname" -}}
+{{ template "milvus.fullname" . }}-querynode
 {{- end -}}
 
 {{/*
 Create a default fully qualified Index Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.indexcoord.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-indexcoord
+{{- define "milvus.indexcoord.fullname" -}}
+{{ template "milvus.fullname" . }}-indexcoord
 {{- end -}}
 
 {{/*
 Create a default fully qualified indexnode name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.indexnode.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-indexnode
+{{- define "milvus.indexnode.fullname" -}}
+{{ template "milvus.fullname" . }}-indexnode
 {{- end -}}
 
 {{/*
 Create a default fully qualified Data Coordinator name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.datacoord.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-datacoord
+{{- define "milvus.datacoord.fullname" -}}
+{{ template "milvus.fullname" . }}-datacoord
 {{- end -}}
 
 {{/*
 Create a default fully qualified datanode name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.datanode.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-datanode
+{{- define "milvus.datanode.fullname" -}}
+{{ template "milvus.fullname" . }}-datanode
 {{- end -}}
 
 {{/*
 Create a default fully qualified pulsar name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "milvus-ha.pulsar.fullname" -}}
-{{ template "milvus-ha.fullname" . }}-pulsar
+{{- define "milvus.pulsar.fullname" -}}
+{{ template "milvus.fullname" . }}-pulsar
 {{- end -}}
 
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "milvus-ha.chart" -}}
+{{- define "milvus.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/* Helm required labels */}}
-{{- define "milvus-ha.labels" -}}
-helm.sh/chart: {{ include "milvus-ha.chart" . }}
-{{ include "milvus-ha.matchLabels" . }}
+{{- define "milvus.labels" -}}
+helm.sh/chart: {{ include "milvus.chart" . }}
+{{ include "milvus.matchLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -122,7 +122,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
 {{/* matchLabels */}}
-{{- define "milvus-ha.matchLabels" -}}
-app.kubernetes.io/name: {{ include "milvus-ha.name" . }}
+{{- define "milvus.matchLabels" -}}
+app.kubernetes.io/name: {{ include "milvus.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}

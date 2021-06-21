@@ -1,4 +1,4 @@
-{{- define "milvus-ha.config" -}}
+{{- define "milvus.config" -}}
 # Copyright (C) 2019-2021 Zilliz. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
@@ -56,13 +56,13 @@ pulsar:
   {{- end }}
   port: {{ $httpsPort | default $httpPort }}
 {{- else }}
-  address: {{ template "milvus-ha.pulsar.fullname" . }}
+  address: {{ template "milvus.pulsar.fullname" . }}
   port: {{ .Values.pulsarStandalone.service.port }}
 {{- end }}
 
 master:
 {{- if .Values.cluster.enabled }}
-  address: {{ template "milvus-ha.rootcoord.fullname" . }}
+  address: {{ template "milvus.rootcoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
@@ -73,7 +73,7 @@ proxyNode:
 
 queryService:
 {{- if .Values.cluster.enabled }}
-  address: {{ template "milvus-ha.querycoord.fullname" . }}
+  address: {{ template "milvus.querycoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
@@ -85,7 +85,7 @@ queryNode:
 
 indexService:
 {{- if .Values.cluster.enabled }}
-  address: {{ template "milvus-ha.indexcoord.fullname" . }}
+  address: {{ template "milvus.indexcoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}
@@ -96,7 +96,7 @@ indexNode:
 
 dataService:
 {{- if .Values.cluster.enabled }}
-  address: {{ template "milvus-ha.datacoord.fullname" . }}
+  address: {{ template "milvus.datacoord.fullname" . }}
 {{- else }}
   address: localhost
 {{- end }}

@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "milvus-ha.indexcoord.fullname" . }}
+  name: {{ template "milvus.indexcoord.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
 {{- if .Values.indexCoordinator.service.labels }}
 {{ toYaml .Values.indexCoordinator.service.labels | indent 4 }}
 {{- end }}
@@ -30,6 +30,6 @@ spec:
       targetPort: metrics
     {{- end }}
   selector:
-{{ include "milvus-ha.matchLabels" . | indent 4 }}
+{{ include "milvus.matchLabels" . | indent 4 }}
     component: "indexcoord"
 {{- end }}

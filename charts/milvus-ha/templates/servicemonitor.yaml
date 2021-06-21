@@ -4,9 +4,9 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.standalone.fullname" . }}
+  name: {{ template "milvus.standalone.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
     {{- if .Values.metrics.serviceMonitor.additionalLabels }}
 {{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
     {{- end }}
@@ -22,7 +22,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: standalone
   targetLabels:
     - app.kubernetes.io/name
@@ -35,9 +35,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.datanode.fullname" . }}
+  name: {{ template "milvus.datanode.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
     {{- if .Values.metrics.serviceMonitor.additionalLabels }}
 {{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
     {{- end }}
@@ -53,7 +53,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: datanode
   targetLabels:
     - app.kubernetes.io/name
@@ -66,9 +66,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.datacoord.fullname" . }}
+  name: {{ template "milvus.datacoord.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
     {{- if .Values.metrics.serviceMonitor.additionalLabels }}
 {{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
     {{- end }}
@@ -84,7 +84,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: datacoord
   targetLabels:
     - app.kubernetes.io/name
@@ -97,9 +97,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.indexnode.fullname" . }}
+  name: {{ template "milvus.indexnode.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
     {{- if .Values.metrics.serviceMonitor.additionalLabels }}
 {{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
     {{- end }}
@@ -115,7 +115,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: indexnode
   targetLabels:
     - app.kubernetes.io/name
@@ -128,9 +128,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.indexcoord.fullname" . }}
+  name: {{ template "milvus.indexcoord.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
     {{- if .Values.metrics.serviceMonitor.additionalLabels }}
 {{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
     {{- end }}
@@ -146,7 +146,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: indexcoord
   targetLabels:
     - app.kubernetes.io/name
@@ -159,9 +159,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.rootcoord.fullname" . }}
+  name: {{ template "milvus.rootcoord.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
     {{- if .Values.metrics.serviceMonitor.additionalLabels }}
 {{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
     {{- end }}
@@ -177,7 +177,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: rootcoord
   targetLabels:
     - app.kubernetes.io/name
@@ -190,9 +190,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.proxy.fullname" . }}
+  name: {{ template "milvus.proxy.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
     {{- if .Values.metrics.serviceMonitor.additionalLabels }}
 {{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
     {{- end }}
@@ -208,7 +208,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: proxy
   targetLabels:
     - app.kubernetes.io/name
@@ -221,9 +221,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.querynode.fullname" . }}
+  name: {{ template "milvus.querynode.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
     {{- if .Values.metrics.serviceMonitor.additionalLabels }}
 {{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
     {{- end }}
@@ -239,7 +239,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: querynode
   targetLabels:
     - app.kubernetes.io/name
@@ -252,9 +252,9 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ template "milvus-ha.querycoord.fullname" . }}
+  name: {{ template "milvus.querycoord.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
     {{- if .Values.metrics.serviceMonitor.additionalLabels }}
 {{ toYaml .Values.metrics.serviceMonitor.additionalLabels | indent 4 }}
     {{- end }}
@@ -270,7 +270,7 @@ spec:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: querycoord
   targetLabels:
     - app.kubernetes.io/name

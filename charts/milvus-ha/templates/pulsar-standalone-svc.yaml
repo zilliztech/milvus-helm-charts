@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "milvus-ha.pulsar.fullname" . }}
+  name: {{ template "milvus.pulsar.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
 {{- if .Values.pulsarStandalone.service.labels }}
 {{ toYaml .Values.pulsarStandalone.service.labels | indent 4 }}
 {{- end }}
@@ -24,6 +24,6 @@ spec:
       protocol: TCP
       targetPort: pulsar
   selector:
-{{ include "milvus-ha.matchLabels" . | indent 4 }}
+{{ include "milvus.matchLabels" . | indent 4 }}
     component: "pulsar"
 {{- end }}

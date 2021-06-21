@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "milvus-ha.standalone.fullname" . }}
+  name: {{ template "milvus.standalone.fullname" . }}
   labels:
-{{ include "milvus-ha.labels" . | indent 4 }}
+{{ include "milvus.labels" . | indent 4 }}
     component: "standalone"
 spec:
   replicas: 1
   selector:
     matchLabels:
-{{ include "milvus-ha.matchLabels" . | indent 6 }}
+{{ include "milvus.matchLabels" . | indent 6 }}
       component: "standalone"
   template:
     metadata:
       labels:
-{{ include "milvus-ha.matchLabels" . | indent 8 }}
+{{ include "milvus.matchLabels" . | indent 8 }}
         component: "standalone"
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
@@ -47,7 +47,7 @@ spec:
         resources:
           {{- toYaml .Values.standalone.resources | nindent 10 }}
         volumeMounts:
-        - name: milvus-ha-config
+        - name: milvus-config
           mountPath: /milvus/configs/milvus.yaml
           subPath: milvus.yaml
           readOnly: true
@@ -69,13 +69,13 @@ spec:
       {{- end }}
 
       volumes:
-      - name: milvus-ha-config
+      - name: milvus-config
         configMap:
-          name: {{ template "milvus-ha.fullname" . }}
+          name: {{ template "milvus.fullname" . }}
       - name: milvus-logs-disk
         {{- if .Values.logsPersistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ .Values.logsPersistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus-ha.fullname" . | trunc 58)) }}
+          claimName: {{ .Values.logsPersistence.persistentVolumeClaim.existingClaim | default (printf "%s-logs" (include "milvus.fullname" . | trunc 58)) }}
         {{- else }}
         emptyDir: {}
         {{- end }}
