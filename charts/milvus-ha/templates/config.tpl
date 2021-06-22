@@ -71,7 +71,7 @@ master:
 proxyNode:
   port: 19530
 
-queryService:
+queryCoord:
 {{- if .Values.cluster.enabled }}
   address: {{ template "milvus.querycoord.fullname" . }}
 {{- else }}
