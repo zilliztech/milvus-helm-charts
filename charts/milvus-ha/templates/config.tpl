@@ -60,7 +60,7 @@ pulsar:
   port: {{ .Values.pulsarStandalone.service.port }}
 {{- end }}
 
-master:
+rootCoord:
 {{- if .Values.cluster.enabled }}
   address: {{ template "milvus.rootcoord.fullname" . }}
 {{- else }}
@@ -68,7 +68,7 @@ master:
 {{- end }}
   port: {{ .Values.rootCoordinator.service.port }}
 
-proxyNode:
+proxy:
   port: 19530
 
 queryCoord:
@@ -83,7 +83,7 @@ queryNode:
   gracefulTime: 5000 #ms
   port: 21123
 
-indexService:
+indexCoord:
 {{- if .Values.cluster.enabled }}
   address: {{ template "milvus.indexcoord.fullname" . }}
 {{- else }}
