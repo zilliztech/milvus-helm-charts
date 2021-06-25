@@ -59,6 +59,8 @@ standalone:
   tolerations: []
   extraEnv: []
 
+  rocksmqPath: "/var/lib/milvus/rdb_data"
+
 proxy:
   enabled: true
   replicas: 1

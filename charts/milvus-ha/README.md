@@ -106,6 +106,7 @@ The following table lists the configurable parameters of the Milvus Standalone c
 | `standalone.affinity`                     | Affinity settings for Milvus Standalone pods assignment | `{}`                                          |
 | `standalone.tolerations`                  | Toleration labels for Milvus Standalone pods assignment | `[]`                                          |
 | `standalone.extraEnv`                     | Additional Milvus Standalone container environment variables | `[]`                                     |
+| `standalone.rocksmqPath`                  | RocksMQ data path                             | `/var/lib/milvus/rdb_data`                              |
 
 ### Milvus Proxy Deployment Configuration
 
