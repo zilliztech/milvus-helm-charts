@@ -60,11 +60,8 @@ pulsar:
   port: {{ .Values.pulsarStandalone.service.port }}
 {{- end }}
 
-
-{{- if not .Values.cluster.enabled }}
 rocksmq:
-  path: {{ .Values.standalone.rocksmqPath }}
-{{- end }}
+  path: "/var/lib/milvus/rdb_data"
 
 rootCoord:
 {{- if .Values.cluster.enabled }}

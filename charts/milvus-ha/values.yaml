@@ -59,7 +59,26 @@ standalone:
   tolerations: []
   extraEnv: []
 
-  rocksmqPath: "/var/lib/milvus/rdb_data"
+persistence:
+  mountPath: "/var/lib/milvus"
+  ## If true, alertmanager will create/use a Persistent Volume Claim
+  ## If false, use emptyDir
+  ##
+  enabled: true
+  annotations: {}
+  #  helm.sh/resource-policy: keep
+  persistentVolumeClaim:
+    existingClaim: ""
+    ## milvus logs Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.
+    ##
+    storageClass:
+    accessModes: ReadWriteOnce
+    size: 5Gi
+    subPath: ""
 
 proxy:
   enabled: true
