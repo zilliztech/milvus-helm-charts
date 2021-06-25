@@ -28,7 +28,15 @@ spec:
       - name: pulsar
         image: "{{ .Values.pulsarStandalone.image.repository }}:{{ .Values.pulsarStandalone.image.tag }}"
         imagePullPolicy: {{ .Values.pulsarStandalone.image.pullPolicy }}
-        command: ["bin/pulsar", "standalone"]
+        command: ["/bin/sh", "-c"]
+        args:
+          - pulsar_conf_path=/pulsar/conf/standalone.conf;
+            echo "" >> $pulsar_conf_path;
+            echo "maxMessageSize=1073741824" >> $pulsar_conf_path;
+            echo "" >> $pulsar_conf_path;
+            echo "nettyMaxFrameSizeBytes=1073741824" >> $pulsar_conf_path;
+            bin/pulsar standalone;
+
         {{- if .Values.pulsarStandalone.extraEnv }}
         env:
           {{- toYaml .Values.pulsarStandalone.extraEnv | nindent 10 }}

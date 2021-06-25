@@ -133,7 +133,7 @@ indexnode:
 
 dataCoordinator:
   enabled: true
-  replicas: 1  # Run Data Coordinator mode with replication disabled
+  replicas: 1           # Run Data Coordinator mode with replication disabled
   resources: {}
   nodeSelector: {}
   affinity: {}
@@ -187,11 +187,11 @@ metrics:
 log:
   level: "debug"
   file:
-    maxSize: 300 # MB
-    maxAge: 10 # day
+    maxSize: 300    # MB
+    maxAge: 10    # day
     maxBackups: 20
   dev: true
-  format: "text" # text/json
+  format: "text"    # text/json
 
 logsPersistence:
   mountPath: "/var/logs/milvus"
@@ -362,4 +362,3 @@ externalPulsar:
   enabled: false
   host: localhost
   port: 6650
-  
