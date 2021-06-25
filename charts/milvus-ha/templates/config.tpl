@@ -60,6 +60,12 @@ pulsar:
   port: {{ .Values.pulsarStandalone.service.port }}
 {{- end }}
 
+
+{{- if not .Values.cluster.enabled }}
+rocksmq:
+  path: {{ .Values.standalone.rocksmqPath }}
+{{- end }}
+
 rootCoord:
 {{- if .Values.cluster.enabled }}
   address: {{ template "milvus.rootcoord.fullname" . }}
